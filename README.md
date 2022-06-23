@@ -9,6 +9,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 * [`🎧 Features`](#-features)
 * [`👨‍🔧 Usage`](#-usage)
 * [`💻 Local Development`](#-local-development)
+* [`🏥 Contributing`](#-contributing)
 
 ## 🎧 **Features**
 
@@ -191,3 +192,6 @@ $ python3 app.py
 
 Navigate to: http://127.0.0.1:5000 to get started.
 
+## 🏥 Contributing
+
+Feel free to create an issue if you encounter any bugs or would like to suggest something!
