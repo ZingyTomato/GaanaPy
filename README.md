@@ -1,14 +1,16 @@
-# GaanaPy
+# 🎶 GaanaPy
 
 GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Music Streaming Service.
 
+![image](https://user-images.githubusercontent.com/79736973/175231809-f79f07f7-7439-4ebe-a515-1448d0605b28.png)
+
 # 📖 Table Of Contents
 
-* [`Features`](#features)
-* [`Usage`](#usage)
-* [`Local Development`](#local-development)
+* [`🎧 Features`](#-features)
+* [`👨‍🔧 Usage`](#-usage)
+* [`💻 Local Development`](#-local-development)
 
-## **Features**
+## 🎧 **Features**
 
 ##### The API can get the following details for a specific track in JSON format (Other Options Include: Albums, Artists, Trending and Playlists):
 - **Track Name**
@@ -64,28 +66,27 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 ]
 ```
 
-## **Usage**
+## 👨‍🔧 **Usage**
 
----
 ##### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh
 https://api.nikomusic.tk/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/songs/search?query=tyler%20herro to get a JSON response of song results in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/songs/search?query=tyler herro` to get a JSON response of song results in return.
 
 ---
 ##### **Search For Albums**: (Requires a search query, limit is optional)
 ```sh
 https://api.nikomusic.tk/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/albums/search?query=all%20over%20the%20place to get a JSON response of album results in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/albums/search?query=all over the place` to get a JSON response of album results in return.
 
 ----
 ##### **Search For Artists**: (Requires a search query, limit is optional)
 ```sh
 https://api.nikomusic.tk/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/artists/search?query=KSI to get a JSON response of arist results in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/artists/search?query=KSI` to get a JSON response of arist results in return.
 
 ----
 ##### **Get Song Info**: (Requires a SEOKEY)
@@ -104,7 +105,7 @@ https://api.nikomusic.tk/songs/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/songs/info?seokey=tyler-herro to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Album Info**: (Requires a SEOKEY)
@@ -131,7 +132,7 @@ https://api.nikomusic.tk/albums/info?seokey=ALBUM_SEOKEY
 ]
 ```
 
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/albums/info?seokey=tyler-herro to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Artist Info**: (Requires a SEOKEY)
@@ -150,7 +151,7 @@ https://api.nikomusic.tk/artists/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/artists/info?seokey=jack-harlow to get a JSON response of the artists's info in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
 
 ----
 ##### **Get Playlist Info**: (Requires a SEOKEY)
@@ -163,7 +164,7 @@ https://api.nikomusic.tk/playlists/info?seokey=SEOKEY
 * In a URL, for example, `https://gaana.com/playlist/gaana-dj-gaana-international-top-50`, `gaana-dj-gaana-international-top-50` is the playlists's seokey. 
 
 
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/playlists/info?seokey=gaana-dj-gaana-international-top-50 to get a JSON response of the playlists's info in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
 
 ----
 ##### **Get Trending Tracks**: (Requires a LANGUAGE)
@@ -171,9 +172,9 @@ https://api.nikomusic.tk/playlists/info?seokey=SEOKEY
 https://api.nikomusic.tk/trending?lang=LANGUAGE
 ```
 
-**Example:** Create a GET request or navigate to https://api.nikomusic.tk/trending?lang=English to get a JSON response of the trending english songs in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/trending?lang=English` to get a JSON response of the trending english songs in return.
 
-## **Local Development**
+## 💻 **Local Development**
 
 Clone the Repository
 ```sh
@@ -187,4 +188,6 @@ Run the app using
 ```sh
 $ python3 app.py
 ```
+
+Navigate to: http://127.0.0.1:5000 to get started.
 
