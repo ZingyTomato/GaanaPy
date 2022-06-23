@@ -20,6 +20,9 @@ def searchArtists(query, limit):
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
     except IndexError:
       pass
+
+  if len(ids) == 0:
+    return noSearchResults()
   
   return createJson(ids)
 
@@ -58,7 +61,11 @@ def createJsonSeo(result):
     response = requests.request("POST", f"https://gaana.com/apiv2?seokey={result}&type=artistDetail", headers=headers).text.encode()
     results = json.loads(response)
 
-    data['artist_id'] = results['artist'][0]['artist_id']
+    try:
+      data['artist_id'] = results['artist'][0]['artist_id']
+    except KeyError:
+      return incorrectSeokey()
+
     data['name'] = results['artist'][0]['name']
     data['song_count'] = results['artist'][0]['songs']
     data['album_count'] = results['artist'][0]['albums']

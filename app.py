@@ -10,9 +10,13 @@ from api.functions import *
 
 app = Flask(__name__)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify(page404())
+
 @app.route('/', methods=['GET'])
 def landing_page():
-    return errorMessage()
+    return jsonify(errorMessage())
 
 @app.route('/songs/search', methods=['GET'])
 def search_results():
@@ -21,7 +25,7 @@ def search_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return noResults()
+         return jsonify(noResults())
     elif limit is None:
          result = songs.searchSong(query, 10)
     else:
@@ -35,7 +39,7 @@ def id_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return noResultsId()
+         return jsonify(noResultsId())
 
     result = songs.createJsonSeo(query)
 
@@ -48,7 +52,7 @@ def recommend_results():
     limit = request.args.get('limit')
 
     if track_id is None:
-         return noResultsRecommendations()
+         return jsonify(noResultsRecommendations())
     elif limit is None:
          result = recommend.createJsonRecommendations(track_id, 20)
     else:
@@ -63,7 +67,7 @@ def search_album_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return noResultsAlbums()
+         return jsonify(noResultsAlbums())
     elif limit is None:
          result = albums.searchAlbum(query, 10)
     else:
@@ -78,7 +82,7 @@ def search_artists_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return noResultsArtists()
+         return jsonify(noResultsArtists())
     elif limit is None:
          result = artists.searchArtists(query, 10)
     else:
@@ -92,7 +96,7 @@ def id_albums_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return noResultsAlbumId()
+         return jsonify(noResultsAlbumId())
 
     result = albums.createJsonSeo(query)
 
@@ -104,7 +108,7 @@ def id_artists_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return noResultsArtistId()
+         return jsonify(noResultsArtistId())
 
     result = artists.createJsonSeo(query)
 
@@ -117,7 +121,7 @@ def trending_results():
     limit = request.args.get('limit')
 
     if lang is None:
-         return noResultsTrending()
+         return jsonify(noResultsTrending())
     elif limit is None:
          result = trending.getTrending(lang, 10)
     else:
@@ -131,7 +135,7 @@ def playlists_results():
     seokey = request.args.get('seokey')
 
     if seokey is None:
-         return noResultsPlaylistId()
+         return jsonify(noResultsPlaylistId())
 
     result = playlists.getPlaylists(seokey)
 

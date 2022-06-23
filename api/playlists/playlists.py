@@ -25,4 +25,7 @@ def getPlaylists(seokey):
     except IndexError:
       pass
 
+  if len(ids) == 0:
+    return incorrectSeokey()
+
   return songs.createJson(ids)

@@ -20,6 +20,9 @@ def searchSong(query, limit):
     except IndexError:
       pass
   
+  if len(ids) == 0:
+    return noSearchResults()
+
   return createJson(ids)
 
 def createJson(result):
@@ -58,7 +61,11 @@ def createJson(result):
 
       data['stream_urls'] = {'urls': {}}
    
-      data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+      try:
+        data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+      except KeyError:
+        data['stream_urls']['urls']['high_quality'] = ""
+      
       data['stream_urls']['urls']['medium_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message'])
       data['stream_urls']['urls']['low_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message']).replace("64.mp4", "16.mp4")
 
@@ -74,7 +81,11 @@ def createJsonSeo(seokey):
     response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=songDetail", headers=headers).text.encode()
     results = json.loads(response)
 
-    data['track_id'] = results['tracks'][0]['track_id']
+    try:
+      data['track_id'] = results['tracks'][0]['track_id']
+    except KeyError:
+      return incorrectSeokey()
+
     data['seokey'] = results['tracks'][0]['seokey']
     data['album_seokey'] = results['tracks'][0]['albumseokey']
     data['title'] = results['tracks'][0]['track_title']
@@ -101,7 +112,11 @@ def createJsonSeo(seokey):
 
     data['stream_urls'] = {'urls': {}}
    
-    data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+    try:
+      data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+    except KeyError:
+      data['stream_urls']['urls']['high_quality'] = ""
+
     data['stream_urls']['urls']['medium_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message'])
     data['stream_urls']['urls']['low_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message']).replace("64.mp4", "16.mp4")
 

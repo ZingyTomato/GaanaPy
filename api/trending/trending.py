@@ -28,4 +28,7 @@ def getTrending(language, limit):
     except IndexError:
       pass
 
+  if len(ids) == 0:
+    return noSearchResults()
+
   return songs.createJson(ids)

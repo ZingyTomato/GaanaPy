@@ -20,6 +20,9 @@ def searchAlbum(query, limit):
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
     except IndexError:
       pass
+
+  if len(ids) == 0:
+    return noSearchResults()
   
   return createJson(ids)
 
@@ -28,6 +31,7 @@ def createJson(result):
     final_json = []
 
     for seokey in result:
+
       data = {}
       response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=headers).text.encode()
       results = json.loads(response)
@@ -47,10 +51,12 @@ def createJson(result):
       data['language'] = results['album']['language']
       data['label'] = results['album']['recordlevel']
       data['track_count'] = results['album']['trackcount']
+
       try:
         data['release_date'] = results['album']['release_date']
       except:
         data['release_date'] = ""
+
       data['total_play_count'] = results['album']['al_play_ct']
       data['total_favorite_count'] = results['album']['favorite_count']
       data['album_url'] = f"https://gaana.com/album/{results['album']['seokey']}"
@@ -75,13 +81,19 @@ def createJsonSeo(seokey):
     response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=headers).text.encode()
     results = json.loads(response)
 
-    data['seokey'] = results['album']['seokey']
+    try:
+      data['seokey'] = results['album']['seokey']
+    except KeyError:
+      return incorrectSeokey()
+
     data['album_id'] = results['album']['album_id']
     data['title'] = results['album']['title']
+
     try:
       data['artists'] = findArtistNames(results['album']['artist'])
     except KeyError:
       data['artists'] = ""
+      
     data['duration'] = formatTime(results['album']['duration'])
     data['is_explicit'] = results['album']['parental_warning']
     data['language'] = results['album']['language']
@@ -102,9 +114,7 @@ def createJsonSeo(seokey):
       for i in range(0,int(data['track_count'])):
         seokeys.append(results['tracks'][i]['seokey'])
     except IndexError:
-      data = {'ERROR':'Album is Inactive.'}
-      final_json.append(data)
-      return final_json
+      return albumInactive()
 
     data['tracks'] = songs.createJson(seokeys)
 

@@ -17,9 +17,7 @@ def createJsonRecommendations(song_id, limit):
       try:
         data['seokey'] = results['tracks'][int(i)]['seokey']
       except IndexError:
-        data = {'ERROR':'Track is Inactive.'}
-        final_json.append(data)
-        return final_json
+        return trackInactive()
         
       data['track_id'] = results['tracks'][int(i)]['track_id']
       data['title'] = results['tracks'][int(i)]['track_title']

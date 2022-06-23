@@ -28,61 +28,91 @@ def errorMessage():
     'Github': "https://github.com/zingytomato"
     }
 
-    return jsonify(landing_info)
+    return landing_info
+
+def page404():
+
+    landing_info={'ERROR': 'This URL does not exist.'}
+
+    return landing_info
 
 def noResults():
 
     landing_info={'ERROR': 'Please enter a valid query! /songs/search?query=SONG_NAME&limit=LIMIT'}
 
-    return jsonify(landing_info)
+    return landing_info
+
+def noSearchResults():
+
+    landing_info={'ERROR': 'Unable to find any results!'}
+
+    return landing_info
 
 def noResultsAlbums():
 
     landing_info={'ERROR': 'Please enter a valid query! /albums/search?query=ALBUM_NAME'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsArtists():
 
     landing_info={'ERROR': 'Please enter a valid query! /artists/search?query=ARTIST_NAME'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsTrending():
 
     landing_info={'ERROR': 'Please enter a valid language! /trending?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsId():
 
     landing_info={'ERROR': 'Please enter a valid seokey! /songs/info?seokey=SEOKEY'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsAlbumId():
 
     landing_info={'ERROR': 'Please enter a valid seokey! /albums/info?seokey=SEOKEY'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsArtistId():
 
     landing_info={'ERROR': 'Please enter a valid seokey! /artists/info?seokey=SEOKEY'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsPlaylistId():
 
     landing_info={'ERROR': 'Please enter a valid seokey! /playlists/info?seokey=SEOKEY'}
 
-    return jsonify(landing_info)
+    return landing_info
 
 def noResultsRecommendations():
 
     landing_info={'ERROR': 'Please enter a valid track ID! /songs/recommend?track_id=TRACK_ID'}
 
-    return jsonify(landing_info)
+    return landing_info
+
+def incorrectSeokey():
+
+    landing_info={'ERROR': 'Invalid Seokey!'}
+
+    return landing_info
+
+def albumInactive():
+
+    landing_info = {'ERROR':'Album is Inactive/Incorrect Album SEOKEY.'}
+
+    return landing_info
+
+def trackInactive():
+
+    landing_info = {'ERROR':'Track is Inactive/Incorrect Track ID.'}
+        
+    return landing_info
 
 def decryptLink(link):
 
