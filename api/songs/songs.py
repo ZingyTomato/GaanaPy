@@ -17,7 +17,7 @@ def searchSong(query, limit):
   for i in range(0,int(limit)):
     try:
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
-    except IndexError:
+    except (IndexError, TypeError):
       pass
   
   if len(ids) == 0:
@@ -83,7 +83,7 @@ def createJsonSeo(seokey):
 
     try:
       data['track_id'] = results['tracks'][0]['track_id']
-    except KeyError:
+    except (TypeError, KeyError):
       return incorrectSeokey()
 
     data['seokey'] = results['tracks'][0]['seokey']

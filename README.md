@@ -172,6 +172,7 @@ https://api.nikomusic.tk/playlists/info?seokey=SEOKEY
 ```sh
 https://api.nikomusic.tk/trending?lang=LANGUAGE
 ```
+**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
 **Example:** Create a GET request or navigate to `https://api.nikomusic.tk/trending?lang=English` to get a JSON response of the trending english songs in return.
 
@@ -190,7 +191,7 @@ Run the app using
 $ python3 app.py
 ```
 
-Navigate to: http://127.0.0.1:5000 to get started.
+Navigate to: `http://127.0.0.1:5000` to get started.
 
 ## 🏥 Contributing
 

@@ -18,7 +18,7 @@ def searchArtists(query, limit):
   for i in range(0,int(limit)):
     try:
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
-    except IndexError:
+    except (IndexError, TypeError):
       pass
 
   if len(ids) == 0:
@@ -63,7 +63,7 @@ def createJsonSeo(result):
 
     try:
       data['artist_id'] = results['artist'][0]['artist_id']
-    except KeyError:
+    except (KeyError, TypeError):
       return incorrectSeokey()
 
     data['name'] = results['artist'][0]['name']
@@ -96,6 +96,4 @@ def top_tracks(artist_id):
     for i,track in enumerate(results['entities']):
         seokeys.append(track['seokey'])
 
-    final_json.append(songs.createJson(seokeys))
-
-    return final_json
+    return songs.createJson(seokeys)

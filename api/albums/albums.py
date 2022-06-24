@@ -18,7 +18,7 @@ def searchAlbum(query, limit):
   for i in range(0,int(limit)):
     try:
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
-    except IndexError:
+    except (IndexError, TypeError):
       pass
 
   if len(ids) == 0:
@@ -83,7 +83,7 @@ def createJsonSeo(seokey):
 
     try:
       data['seokey'] = results['album']['seokey']
-    except KeyError:
+    except (KeyError, TypeError):
       return incorrectSeokey()
 
     data['album_id'] = results['album']['album_id']

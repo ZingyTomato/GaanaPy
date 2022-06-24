@@ -8,7 +8,11 @@ def createJsonRecommendations(song_id, limit):
 
     data = {}    
     response = requests.request("POST", f"https://gaana.com/apiv2?id={song_id}&type=songSimilar", headers=headers).text.encode()
-    results = json.loads(response)
+    
+    try:
+      results = json.loads(response)
+    except json.decoder.JSONDecodeError:
+      return noSearchResults()
       
     for i in range(0, int(limit)):
     

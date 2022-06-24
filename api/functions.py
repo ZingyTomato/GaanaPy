@@ -32,7 +32,7 @@ def errorMessage():
 
 def page404():
 
-    landing_info={'ERROR': 'This URL does not exist.'}
+    landing_info={'ERROR': 'This URL does not exist. Double check the entered URL.'}
 
     return landing_info
 
