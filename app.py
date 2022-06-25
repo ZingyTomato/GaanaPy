@@ -6,6 +6,7 @@ from api.artists import artists
 from api.trending import trending
 from api.playlists import playlists
 from api.recommend import recommend
+from api.newreleases import newreleases
 from api.functions import *
 
 app = Flask(__name__)
@@ -13,6 +14,10 @@ app = Flask(__name__)
 @app.errorhandler(404)
 def page_not_found(e):
     return jsonify(page404())
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return jsonify(page500())
 
 @app.route('/', methods=['GET'])
 def landing_page():
@@ -129,6 +134,21 @@ def trending_results():
 
     return jsonify(result)
 
+@app.route('/newreleases', methods=['GET'])
+def newreleases_results():
+
+    lang = request.args.get('lang')
+    limit = request.args.get('limit')
+  
+    if lang is None:
+         return jsonify(noResultsNewReleases())
+    elif limit is None:
+         result = newreleases.getNewReleases(lang, 10)
+    else:
+         result = newreleases.getNewReleases(lang, limit)
+
+    return jsonify(result)
+
 @app.route('/playlists/info', methods=['GET'])
 def playlists_results():
 
@@ -144,4 +164,5 @@ def playlists_results():
 if __name__ == "__main__":
     app.debug = False
     app.config['JSON_SORT_KEYS'] = False
-    app.run(host='0.0.0.0', port=5000, use_reloader=False, threaded=True)
+    app.run(host='0.0.0.0', port=5001, use_reloader=False, threaded=True)
+    

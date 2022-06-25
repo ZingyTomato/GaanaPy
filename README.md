@@ -13,7 +13,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ## 🎧 **Features**
 
-##### The API can get the following details for a specific track in JSON format (Other Options Include: Albums, Artists, Trending and Playlists):
+##### The API can get the following details for a specific track in JSON format (Other Options Include: Albums, Artists, Trending, New Releases and Playlists):
 - **Track Name**
 - **Track Duration**
 - **Track Artwork**
@@ -174,7 +174,16 @@ https://api.nikomusic.tk/trending?lang=LANGUAGE
 ```
 **Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/trending?lang=English` to get a JSON response of the trending english songs in return.
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/trending?lang=English` to get a JSON response of the trending English songs in return.
+
+----
+##### **Get New Releases**: (Requires a LANGUAGE)
+```sh
+https://api.nikomusic.tk/newreleases?lang=LANGUAGE
+```
+**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
+
+**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
 
 ## 💻 **Local Development**
 

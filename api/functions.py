@@ -16,8 +16,6 @@ def errorMessage():
     'Get Song Info With SEOKEY': '/songs/info?seokey=SEOKEY', 
     'Get Related Tracks With TRACK_ID': '/songs/recommend?track_id=TRACK_ID', 
     'Limit Recommendations With TRACK_ID': '/songs/recommend?track_id=TRACK_ID&limit=LIMIT',
-    'Get Trending Tracks': '/trending?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)',
-    'Limit Trending Tracks': '/trending?lang=LANGUAGE&limit=LIMIT',
     'Search For Albums': '/albums/search?query=ALBUM_NAME',
     'Limit Album Results': '/albums/search?query=ALBUM_NAME&limit=LIMIT', 
     'Get Album Info With SEOKEY': '/albums/info?seokey=SEOKEY', 
@@ -25,7 +23,11 @@ def errorMessage():
     'Limit Artist Results': '/artists/search?query=ARTIST_NAME&limit=LIMIT', 
     'Get Artist Info With SEOKEY': '/artists/info?seokey=SEOKEY', 
     'Get Playlist Info with SEOKEY': '/playlists/info?seokey=SEOKEY',
-    'Github': "https://github.com/zingytomato"
+    'Get Trending Tracks': '/trending?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)',
+    'Limit Trending Tracks': '/trending?lang=LANGUAGE&limit=LIMIT',
+    'Get New Releases': '/newreleases?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)',
+    'Limit New Releases': '/newreleases?lang=LANGUAGE&limit=LIMIT',
+    'Github': "https://github.com/ZingyTomato/GaanaPy"
     }
 
     return landing_info
@@ -33,6 +35,12 @@ def errorMessage():
 def page404():
 
     landing_info={'ERROR': 'This URL does not exist. Double check the entered URL.'}
+
+    return landing_info
+
+def page500():
+
+    landing_info={'ERROR': 'There seems to be an issue. Double check the URL parameters.'}
 
     return landing_info
 
@@ -63,6 +71,12 @@ def noResultsArtists():
 def noResultsTrending():
 
     landing_info={'ERROR': 'Please enter a valid language! /trending?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)'}
+
+    return landing_info
+
+def noResultsNewReleases():
+
+    landing_info={'ERROR': 'Please enter a valid language! /newreleases?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)'}
 
     return landing_info
 
@@ -111,6 +125,12 @@ def albumInactive():
 def trackInactive():
 
     landing_info = {'ERROR':'Track is Inactive/Incorrect Track ID.'}
+        
+    return landing_info
+
+def invalidInteger():
+
+    landing_info = {'ERROR':'Please enter a valid limit integer!'}
         
     return landing_info
 
