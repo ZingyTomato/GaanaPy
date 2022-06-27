@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, redirect, jsonify, json
 import json
 from api.songs import songs
@@ -164,5 +165,5 @@ def playlists_results():
 if __name__ == "__main__":
     app.debug = False
     app.config['JSON_SORT_KEYS'] = False
-    app.run(host='0.0.0.0', port=5001, use_reloader=False, threaded=True)
+    app.run(host = "0.0.0.0", port = os.getenv("PORT", default = 5000), use_reloader=False, threaded=True)
     
