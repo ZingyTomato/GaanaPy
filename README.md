@@ -10,6 +10,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 * [`👨‍🔧 Usage`](#-usage)
 * [`💻 Local Development`](#-local-development)
 * [`🏥 Contributing`](#-contributing)
+* [`🐳 Docker Deployment`](#-docker-deployment)
 
 ## 🎧 **Features**
 
@@ -201,6 +202,24 @@ $ python3 app.py
 ```
 
 Navigate to: `http://127.0.0.1:5000` to get started.
+
+## **🐳 Docker Deployment**
+
+Deploy the API locally using the following Docker-Compose stack: 
+
+```
+---
+version: "2.1"
+services:
+  gaanapy:
+    image: zingytomato/gaanapy:latest
+    container_name: gaanapy
+    ports:
+      - 5000:5000 # External port can be changed 
+    restart: unless-stopped
+```
+
+Navigate to: `http://HOST_IP:5000` to get started.
 
 ## 🏥 Contributing
 
