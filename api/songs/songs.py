@@ -40,7 +40,7 @@ def createJson(result):
       data['title'] = results['tracks'][0]['track_title']
       data['artists'] = findArtistNames(results['tracks'][0]['artist'])
       data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
-      data['artist_image'] = results['tracks'][0]['artist_detail'][0]['atw']
+      data['artist_image'] = proxyUrl(results['tracks'][0]['artist_detail'][0]['atw'])
       data['album'] = results['tracks'][0]['album_title']
       data['duration'] = formatTime(results['tracks'][0]['duration'])
       data['genres'] = findGenres(results['tracks'][0]['gener'])
@@ -55,19 +55,19 @@ def createJson(result):
 
       data['images'] = {'urls': {}}
 
-      data['images']['urls']['large_artwork'] = results['tracks'][0]['artwork_large']
-      data['images']['urls']['medium_artwork'] = results['tracks'][0]['artwork_web']
-      data['images']['urls']['small_artwork'] = results['tracks'][0]['artwork']
+      data['images']['urls']['large_artwork'] = proxyUrl(results['tracks'][0]['artwork_large'])
+      data['images']['urls']['medium_artwork'] = proxyUrl(results['tracks'][0]['artwork_web'])
+      data['images']['urls']['small_artwork'] = proxyUrl(results['tracks'][0]['artwork'])
 
       data['stream_urls'] = {'urls': {}}
    
       try:
-        data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+        data['stream_urls']['urls']['high_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['high']['message']))
       except KeyError:
         data['stream_urls']['urls']['high_quality'] = ""
       
-      data['stream_urls']['urls']['medium_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message'])
-      data['stream_urls']['urls']['low_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message']).replace("64.mp4", "16.mp4")
+      data['stream_urls']['urls']['medium_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['medium']['message']))
+      data['stream_urls']['urls']['low_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['medium']['message'])).replace("64.mp4", "16.mp4")
 
       final_json.append(data)
 
@@ -91,7 +91,7 @@ def createJsonSeo(seokey):
     data['title'] = results['tracks'][0]['track_title']
     data['artists'] = findArtistNames(results['tracks'][0]['artist'])
     data['artist_seokey'] = findArtistSeoKeys(results['tracks'][0]['artist'])
-    data['artist_image'] = results['tracks'][0]['artist_detail'][0]['atw']
+    data['artist_image'] = proxyUrl(results['tracks'][0]['artist_detail'][0]['atw'])
     data['album'] = results['tracks'][0]['album_title']
     data['duration'] = formatTime(results['tracks'][0]['duration'])
     data['genres'] = findGenres(results['tracks'][0]['gener'])
@@ -106,19 +106,19 @@ def createJsonSeo(seokey):
 
     data['images'] = {'urls': {}}
 
-    data['images']['urls']['large_artwork'] = results['tracks'][0]['artwork_large']
-    data['images']['urls']['medium_artwork'] = results['tracks'][0]['artwork_web']
-    data['images']['urls']['small_artwork'] = results['tracks'][0]['artwork']
+    data['images']['urls']['large_artwork'] = proxyUrl(results['tracks'][0]['artwork_large'])
+    data['images']['urls']['medium_artwork'] = proxyUrl(results['tracks'][0]['artwork_web'])
+    data['images']['urls']['small_artwork'] = proxyUrl(results['tracks'][0]['artwork'])
 
     data['stream_urls'] = {'urls': {}}
    
     try:
-      data['stream_urls']['urls']['high_quality'] = decryptLink(results['tracks'][0]['urls']['high']['message'])
+      data['stream_urls']['urls']['high_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['high']['message']))
     except KeyError:
       data['stream_urls']['urls']['high_quality'] = ""
-
-    data['stream_urls']['urls']['medium_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message'])
-    data['stream_urls']['urls']['low_quality'] = decryptLink(results['tracks'][0]['urls']['medium']['message']).replace("64.mp4", "16.mp4")
+      
+    data['stream_urls']['urls']['medium_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['medium']['message']))
+    data['stream_urls']['urls']['low_quality'] = proxyUrl(decryptLink(results['tracks'][0]['urls']['medium']['message'])).replace("64.mp4", "16.mp4")
 
     final_json.append(data)
 

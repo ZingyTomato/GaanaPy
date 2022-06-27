@@ -63,9 +63,9 @@ def createJson(result):
 
       data['images'] = {'urls': {}}
 
-      data['images']['urls']['large_artwork'] = results['album']['artwork'].replace("size_s.jpg", "size_l.jpg")
-      data['images']['urls']['medium_artwork'] = results['album']['artwork'].replace("size_s.jpg", "size_m.jpg")
-      data['images']['urls']['small_artwork'] = results['album']['artwork']
+      data['images']['urls']['large_artwork'] = proxyUrl(results['album']['artwork']).replace("size_s.jpg", "size_l.jpg")
+      data['images']['urls']['medium_artwork'] = proxyUrl(results['album']['artwork']).replace("size_s.jpg", "size_m.jpg")
+      data['images']['urls']['small_artwork'] = proxyUrl(results['album']['artwork'])
  
       final_json.append(data)
 
@@ -106,9 +106,9 @@ def createJsonSeo(seokey):
 
     data['images'] = {'urls': {}}
 
-    data['images']['urls']['large_artwork'] = results['album']['artwork'].replace("size_s.jpg", "size_l.jpg")
-    data['images']['urls']['medium_artwork'] = results['album']['artwork'].replace("size_s.jpg", "size_m.jpg")
-    data['images']['urls']['small_artwork'] = results['album']['artwork']
+    data['images']['urls']['large_artwork'] = proxyUrl(results['album']['artwork']).replace("size_s.jpg", "size_l.jpg")
+    data['images']['urls']['medium_artwork'] = proxyUrl(results['album']['artwork']).replace("size_s.jpg", "size_m.jpg")
+    data['images']['urls']['small_artwork'] = proxyUrl(results['album']['artwork'])
  
     try:
       for i in range(0,int(data['track_count'])):

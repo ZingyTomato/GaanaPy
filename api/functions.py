@@ -144,9 +144,18 @@ def decryptLink(link):
    if "https://vodhlsgaana.akamaized.net" in stream_url:
      
      stream_url = stream_url.replace("96.mp4.master", "320.mp4.master")
+     stream_url = stream_url.replace("https://vodhlsgaana.akamaized.net", "https://proxy.nikomusic.tk")
      return stream_url
-       
+     
+   elif "https://stream-cdn.gaana.com" in stream_url:
+
+     stream_url = stream_url.replace("https://stream-cdn.gaana.com", "https://proxy.nikomusic.tk")
+     return stream_url
+
    return stream_url
+
+def proxyUrl(url):
+  return url.replace("https://a10.gaanacdn.com", "https://proxy.nikomusic.tk")
 
 def unpad(s): 
   return s[0:-ord(s[-1])]

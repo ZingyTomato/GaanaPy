@@ -38,9 +38,9 @@ def createJsonRecommendations(song_id, limit):
 
       data['images'] = {'urls': {}}
 
-      data['images']['urls']['large_artwork'] = results['tracks'][int(i)]['artwork_large']
-      data['images']['urls']['medium_artwork'] = results['tracks'][int(i)]['artwork_web']
-      data['images']['urls']['small_artwork'] = results['tracks'][int(i)]['artwork']
+      data['images']['urls']['large_artwork'] = proxyUrl(results['tracks'][int(i)]['artwork_large'].replace("http://", "https://"))
+      data['images']['urls']['medium_artwork'] = proxyUrl(results['tracks'][int(i)]['artwork_web'].replace("http://", "https://"))
+      data['images']['urls']['small_artwork'] = proxyUrl(results['tracks'][int(i)]['artwork'].replace("http://", "https://"))
 
       final_json.append(data)
 
