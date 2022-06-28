@@ -4,6 +4,8 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ![image](https://user-images.githubusercontent.com/79736973/175231809-f79f07f7-7439-4ebe-a515-1448d0605b28.png)
 
+Live API: https://api.nikomusic.tk
+
 # 📖 Table Of Contents
 
 * [`🎧 Features`](#-features)
