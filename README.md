@@ -25,7 +25,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 - **Album Name**
 - **Album URL**
 - **Album Artwork**
-- **Direct m3u8 Stream URLS**
+- **Proxied m3u8 Stream URLS to avoid Geo-Restrictions**
 - **Release Date**
 - .... and a lot more!
 
