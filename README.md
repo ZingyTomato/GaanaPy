@@ -27,7 +27,7 @@ Live API: https://api.nikomusic.tk
 - **Album Name**
 - **Album URL**
 - **Album Artwork**
-- **Proxied m3u8 Stream URLS to avoid Geo-Restrictions**
+- **Direct m3u8 Stream URLS**
 - **Release Date**
 - .... and a lot more!
 
@@ -40,7 +40,7 @@ Live API: https://api.nikomusic.tk
     "title": "Tyler Herro", 
     "artists": "Jack Harlow", 
     "artist_seokeys": "jack-harlow", 
-    "artist_image": "https://proxy.nikomusic.tk/gn_img/artists/XYybzrb2gz/Yybzn4Bgb2/size_m_1607927137.webp", 
+    "artist_image": "https://a10.gaanacdn.com/gn_img/artists/XYybzrb2gz/Yybzn4Bgb2/size_m_1607927137.webp", 
     "album": "Tyler Herro", 
     "duration": "02:36", 
     "genres": "Hip Hop", 
@@ -54,16 +54,16 @@ Live API: https://api.nikomusic.tk
     "album_url": "https://gaana.com/album/tyler-herro", 
     "images": {
       "urls": {
-        "large_artwork": "https://proxy.nikomusic.tk/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_l.jpg", 
-        "medium_artwork": "https://proxy.nikomusic.tk/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_m.jpg", 
-        "small_artwork": "https://proxy.nikomusic.tk/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_s.jpg"
+        "large_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_l.jpg", 
+        "medium_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_m.jpg", 
+        "small_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_s.jpg"
       }
     }, 
     "stream_urls": {
       "urls": {
-        "high_quality": "https://proxy.nikomusic.tk/songs/3/3487503/32408795/32408795_96.mp4.xvod/master.m3u8?sign=1656348416-98YDnDjQ4y-0-b2704a7cd93e281e0faeb8a39f8bf219", 
-        "medium_quality": "https://proxy.nikomusic.tk/songs/3/3487503/32408795/32408795_64.mp4.xvod/master.m3u8?sign=1656348416-5pgvIPXchS-0-6225adbe477c8e2ce77c01909798ec08", 
-        "low_quality": "https://proxy.nikomusic.tk/songs/3/3487503/32408795/32408795_16.mp4.xvod/master.m3u8?sign=1656348416-5pgvIPXchS-0-6225adbe477c8e2ce77c01909798ec08"
+        "high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_96.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec", 
+        "medium_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_64.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6", 
+        "low_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_16.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6"
       }
     }
   }
