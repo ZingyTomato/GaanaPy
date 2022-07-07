@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, redirect, jsonify, json
 import json
 from api.songs import songs
@@ -8,7 +7,9 @@ from api.trending import trending
 from api.playlists import playlists
 from api.recommend import recommend
 from api.newreleases import newreleases
+from api.charts import charts
 from api.functions import *
+import os
 
 app = Flask(__name__)
 
@@ -51,18 +52,48 @@ def id_results():
 
     return jsonify(result)
 
-@app.route('/songs/recommend', methods=['GET'])
-def recommend_results():
+@app.route('/songs/similar', methods=['GET'])
+def recommend_songs_results():
 
     track_id = request.args.get('track_id')
     limit = request.args.get('limit')
 
     if track_id is None:
-         return jsonify(noResultsRecommendations())
+         return jsonify(noResultsRecommendationsSongs())
     elif limit is None:
-         result = recommend.createJsonRecommendations(track_id, 20)
+         result = recommend.createJsonRecommendationsSongs(track_id, 20)
     else:
-         result = recommend.createJsonRecommendations(track_id, limit)
+         result = recommend.createJsonRecommendationsSongs(track_id, limit)
+
+    return jsonify(result)
+
+@app.route('/albums/similar', methods=['GET'])
+def recommend_album_results():
+
+    album_id = request.args.get('album_id')
+    limit = request.args.get('limit')
+
+    if album_id is None:
+         return jsonify(noResultsRecommendationsAlbums())
+    elif limit is None:
+         result = recommend.createJsonRecommendationsAlbums(album_id, 10)
+    else:
+         result = recommend.createJsonRecommendationsAlbums(album_id, limit)
+
+    return jsonify(result)
+
+@app.route('/artists/similar', methods=['GET'])
+def recommend_artists_results():
+
+    artist_id = request.args.get('artist_id')
+    limit = request.args.get('limit')
+
+    if artist_id is None:
+         return jsonify(noResultsRecommendationsArtists())
+    elif limit is None:
+         result = recommend.createJsonRecommendationsArtists(artist_id, 10)
+    else:
+         result = recommend.createJsonRecommendationsArtists(artist_id, limit)
 
     return jsonify(result)
 
@@ -147,6 +178,18 @@ def newreleases_results():
          result = newreleases.getNewReleases(lang, 10)
     else:
          result = newreleases.getNewReleases(lang, limit)
+
+    return jsonify(result)
+
+@app.route('/charts', methods=['GET'])
+def charts_results():
+
+    limit = request.args.get('limit')
+
+    if limit is None:
+         result = charts.getCharts(10)
+    else:
+         result = charts.getCharts(limit)
 
     return jsonify(result)
 

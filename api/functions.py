@@ -14,8 +14,12 @@ def errorMessage():
     'Search For Songs': '/songs/search?query=SONG_NAME', 
     'Limit Search Results': '/songs/search?query=SONG_NAME&limit=LIMIT', 
     'Get Song Info With SEOKEY': '/songs/info?seokey=SEOKEY', 
-    'Get Related Tracks With TRACK_ID': '/songs/recommend?track_id=TRACK_ID', 
-    'Limit Recommendations With TRACK_ID': '/songs/recommend?track_id=TRACK_ID&limit=LIMIT',
+    'Get Related Tracks With TRACK_ID': '/songs/similar?track_id=TRACK_ID', 
+    'Limit Recommendations With TRACK_ID': '/songs/similar?track_id=TRACK_ID&limit=LIMIT',
+    'Get Related Albums With ALBUM_ID': '/albums/similar?track_id=ALBUM_ID', 
+    'Limit Recommendations With ALBUM_ID': '/albums/similar?track_id=ALBUM_ID&limit=LIMIT',
+    'Get Related Artists With ARTIST_ID': '/artists/similar?track_id=ARTIST_ID', 
+    'Limit Recommendations With ARTIST_ID': '/artists/similar?track_id=ARTIST_ID&limit=LIMIT',
     'Search For Albums': '/albums/search?query=ALBUM_NAME',
     'Limit Album Results': '/albums/search?query=ALBUM_NAME&limit=LIMIT', 
     'Get Album Info With SEOKEY': '/albums/info?seokey=SEOKEY', 
@@ -27,6 +31,8 @@ def errorMessage():
     'Limit Trending Tracks': '/trending?lang=LANGUAGE&limit=LIMIT',
     'Get New Releases': '/newreleases?lang=LANGUAGE (LANGUAGE=English, Hindi etc.)',
     'Limit New Releases': '/newreleases?lang=LANGUAGE&limit=LIMIT',
+    'Get Top Charts': '/charts',
+    'Limit Top Charts': '/charts?limit=LIMIT',
     'Github': "https://github.com/ZingyTomato/GaanaPy"
     }
 
@@ -104,9 +110,21 @@ def noResultsPlaylistId():
 
     return landing_info
 
-def noResultsRecommendations():
+def noResultsRecommendationsSongs():
 
-    landing_info={'ERROR': 'Please enter a valid track ID! /songs/recommend?track_id=TRACK_ID'}
+    landing_info={'ERROR': 'Please enter a valid track ID! /songs/similar?track_id=TRACK_ID'}
+
+    return landing_info
+
+def noResultsRecommendationsAlbums():
+
+    landing_info={'ERROR': 'Please enter a valid track ID! /albums/similar?album_id=ALBUM_ID'}
+
+    return landing_info
+
+def noResultsRecommendationsArtists():
+
+    landing_info={'ERROR': 'Please enter a valid track ID! /artists/similar?artist_id=ARTIST_ID'}
 
     return landing_info
 
@@ -168,6 +186,15 @@ def findArtistSeoKeys(results):
     seokeys.append(i['seokey'])
 
   return ', '.join(seokeys)
+
+def findArtistIds(results):
+
+  ids = []
+
+  for i in results:
+    ids.append(i['artist_id'])
+
+  return ', '.join(ids)
 
 def findGenres(results):  
 

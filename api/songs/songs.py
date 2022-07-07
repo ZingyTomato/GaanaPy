@@ -40,8 +40,10 @@ def createJson(result):
       data['title'] = results['tracks'][0]['track_title']
       data['artists'] = findArtistNames(results['tracks'][0]['artist'])
       data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
+      data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
       data['artist_image'] = (results['tracks'][0]['artist_detail'][0]['atw'])
       data['album'] = results['tracks'][0]['album_title']
+      data['album_id'] = results['tracks'][0]['album_id']
       data['duration'] = formatTime(results['tracks'][0]['duration'])
       data['genres'] = findGenres(results['tracks'][0]['gener'])
       data['is_explicit'] = results['tracks'][0]['parental_warning']
@@ -92,7 +94,9 @@ def createJsonSeo(seokey):
     data['artists'] = findArtistNames(results['tracks'][0]['artist'])
     data['artist_seokey'] = findArtistSeoKeys(results['tracks'][0]['artist'])
     data['artist_image'] = (results['tracks'][0]['artist_detail'][0]['atw'])
+    data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
     data['album'] = results['tracks'][0]['album_title']
+    data['album_id'] = results['tracks'][0]['album_id']
     data['duration'] = formatTime(results['tracks'][0]['duration'])
     data['genres'] = findGenres(results['tracks'][0]['gener'])
     data['is_explicit'] = results['tracks'][0]['parental_warning']

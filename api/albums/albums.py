@@ -43,8 +43,11 @@ def createJson(result):
       try:
         data['artists'] = findArtistNames(results['album']['artist'])
         data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
-      except KeyError:
+        data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
+      except (KeyError, IndexError):
         data['artists'] = ""
+        data['artist_seokeys'] = ""
+        data['artist_ids'] = ""
         
       data['duration'] = formatTime(results['album']['duration'])
       data['is_explicit'] = results['album']['parental_warning']
@@ -57,8 +60,8 @@ def createJson(result):
       except:
         data['release_date'] = ""
 
-      data['total_play_count'] = results['album']['al_play_ct']
-      data['total_favorite_count'] = results['album']['favorite_count']
+      data['play_count'] = results['album']['al_play_ct']
+      data['favorite_count'] = results['album']['favorite_count']
       data['album_url'] = f"https://gaana.com/album/{results['album']['seokey']}"
 
       data['images'] = {'urls': {}}
@@ -91,8 +94,12 @@ def createJsonSeo(seokey):
 
     try:
       data['artists'] = findArtistNames(results['album']['artist'])
-    except KeyError:
+      data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
+      data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
+    except (KeyError, IndexError):
       data['artists'] = ""
+      data['artist_seokeys'] = ""
+      data['artist_ids'] = ""
       
     data['duration'] = formatTime(results['album']['duration'])
     data['is_explicit'] = results['album']['parental_warning']
@@ -100,8 +107,8 @@ def createJsonSeo(seokey):
     data['label'] = results['album']['recordlevel']
     data['track_count'] = results['album']['trackcount']
     data['release_date'] = results['album']['release_date']
-    data['total_play_count'] = results['album']['al_play_ct']
-    data['total_favorite_count'] = results['album']['favorite_count']
+    data['play_count'] = results['album']['al_play_ct']
+    data['favorite_count'] = results['album']['favorite_count']
     data['album_url'] = f"https://gaana.com/album/{results['album']['seokey']}"
 
     data['images'] = {'urls': {}}
