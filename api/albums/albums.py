@@ -49,7 +49,7 @@ def createJson(result):
         data['artist_seokeys'] = ""
         data['artist_ids'] = ""
         
-      data['duration'] = formatTime(results['album']['duration'])
+      data['duration'] = results['album']['duration']
       data['is_explicit'] = results['album']['parental_warning']
       data['language'] = results['album']['language']
       data['label'] = results['album']['recordlevel']
@@ -101,7 +101,7 @@ def createJsonSeo(seokey):
       data['artist_seokeys'] = ""
       data['artist_ids'] = ""
       
-    data['duration'] = formatTime(results['album']['duration'])
+    data['duration'] = results['album']['duration']
     data['is_explicit'] = results['album']['parental_warning']
     data['language'] = results['album']['language']
     data['label'] = results['album']['recordlevel']

@@ -207,6 +207,3 @@ def findGenres(results):
         return ""
 
   return ', '.join(genres)
-
-def formatTime(ms):
-  return time.strftime('%M:%S', time.gmtime(int(ms)))

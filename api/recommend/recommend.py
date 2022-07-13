@@ -32,7 +32,7 @@ def createJsonRecommendationsSongs(song_id, limit):
       data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][int(i)]['artist'])
       data['artist_ids'] = findArtistIds(results['tracks'][int(i)]['artist'])
       data['album'] = results['tracks'][int(i)]['album_title']
-      data['duration'] = formatTime(results['tracks'][int(i)]['duration'])
+      data['duration'] = results['tracks'][int(i)]['duration']
       data['genres'] = findGenres(results['tracks'][int(i)]['gener'])
       data['is_explicit'] = results['tracks'][int(i)]['parental_warning']
       data['language'] = results['tracks'][int(i)]['language']
@@ -80,7 +80,7 @@ def createJsonRecommendationsAlbums(album_id, limit):
       data['artists'] = findArtistNames(results['album'][int(i)]['artist'])
       data['artist_seokeys'] = findArtistSeoKeys(results['album'][int(i)]['artist'])
       data['artist_ids'] = findArtistIds(results['album'][int(i)]['artist'])
-      data['duration'] = formatTime(results['album'][int(i)]['duration'])
+      data['duration'] = results['album'][int(i)]['duration']
       data['genres'] = findGenres(results['album'][int(i)]['gener'])
       data['is_explicit'] = results['album'][int(i)]['parental_warning']
       data['language'] = results['album'][int(i)]['language']
