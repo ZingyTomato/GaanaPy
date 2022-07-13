@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: docker login
         env:
-          DOCKER_USER: ${{ Secrets.DOCKER_USER }}
-          DOCKER_PASS: ${{ Secrets.DOCKER_PASS }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS
       - name: Build Image
