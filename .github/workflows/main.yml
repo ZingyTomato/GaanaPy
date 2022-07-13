@@ -17,10 +17,11 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
         run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
       - name: Build Image
         run: |
          docker build . -t zingytomato/gaanapy:latest 
       - name: Push to Docker Hub
         run: |
           docker push zingytomato/gaanapy:latest 
+          docker logout
