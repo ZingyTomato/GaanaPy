@@ -1,6 +1,11 @@
 import os
-from flask import Flask, request, redirect, jsonify, json
-import json
+
+from fastapi.exceptions import HTTPException
+from fastapi.exception_handlers import http_exception_handler
+from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi import FastAPI, Request
+import uvicorn
+
 from api.songs import songs
 from api.albums import albums
 from api.artists import artists
@@ -8,162 +13,146 @@ from api.trending import trending
 from api.playlists import playlists
 from api.recommend import recommend
 from api.newreleases import newreleases
-from api.functions import *
+from api.functions import * # pylint: disable=wildcard-import,unused-wildcard-import
 
-app = Flask(__name__)
+app = FastAPI(title = "GaanaPy", description = "GaanaPy is an unofficial JSON API for Gaana, an Indian Music Streaming Service.") # pylint: disable=line-too-long
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return jsonify(page404())
+@app.route("/", include_in_schema = False)
+async def redirect_to_docs(request: Request): # pylint: disable=unused-argument
+    """
+    Route that redirects to the docs page
+    """
+    return RedirectResponse(url = "/docs")
 
-@app.errorhandler(500)
-def page_not_found(e):
-    return jsonify(page500())
-
-@app.route('/', methods=['GET'])
-def landing_page():
-    return jsonify(errorMessage())
-
-@app.route('/songs/search', methods=['GET'])
-def search_results():
-
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-
-    if query is None:
-         return jsonify(noResults())
-    elif limit is None:
-         result = songs.searchSong(query, 10)
+@app.exception_handler(HTTPException)
+async def custom_exception_handler(request: Request, exc: HTTPException):
+    """
+    Custom exception handler cuz zingy needs one ;-;
+    """
+    if exc.status_code == 404:
+        return JSONResponse(content = await page404())
+    elif exc.status_code == 500:
+        return JSONResponse(content = await page500())
     else:
-         result = songs.searchSong(query, limit)
+        return await http_exception_handler(request, exc)
 
-    return jsonify(result)
-
-@app.route('/songs/info', methods=['GET'])
-def id_results():
-
-    query = request.args.get('seokey')
-
-    if query is None:
-         return jsonify(noResultsId())
-
-    result = songs.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/songs/recommend', methods=['GET'])
-def recommend_results():
-
-    track_id = request.args.get('track_id')
-    limit = request.args.get('limit')
-
+@app.get("/songs/recommend")
+async def recommend_results(request: Request, track_id = None, limit = None): # pylint: disable=unused-argument
+    """
+    Get recommended songs, /songs/recommend
+    """
     if track_id is None:
-         return jsonify(noResultsRecommendations())
+        return JSONResponse(content = await noResultsRecommendations())
     elif limit is None:
-         result = recommend.createJsonRecommendations(track_id, 20)
+        result = await recommend.createJsonRecommendations(track_id, 20)
     else:
-         result = recommend.createJsonRecommendations(track_id, limit)
+        result = await recommend.createJsonRecommendations(track_id, limit)
+    return JSONResponse(content = result)
 
-    return jsonify(result)
-
-@app.route('/albums/search', methods=['GET'])
-def search_album_results():
-
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-
+@app.get("/songs/search")
+async def search_results(request: Request, query = None, limit = None): # pylint: disable=unused-argument
+    """
+    Search songs, /songs/search
+    """
     if query is None:
-         return jsonify(noResultsAlbums())
+        return JSONResponse(content = await noResults())
     elif limit is None:
-         result = albums.searchAlbum(query, 10)
+        result = await songs.searchSong(query, 10)
     else:
-         result = albums.searchAlbum(query, limit)
+        result = await songs.searchSong(query, limit)
+    return JSONResponse(content = result)
 
-    return jsonify(result)
-
-@app.route('/artists/search', methods=['GET'])
-def search_artists_results():
-
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-
+@app.get("/songs/info")
+async def id_results(request: Request, query = None): # pylint: disable=unused-argument
+    """
+    Get info about songs, /songs/info
+    """
     if query is None:
-         return jsonify(noResultsArtists())
-    elif limit is None:
-         result = artists.searchArtists(query, 10)
-    else:
-         result = artists.searchArtists(query, limit)
+        return JSONResponse(content = await noResultsId())
+    result = await songs.createJsonSeo(query)
+    return JSONResponse(content = result)
 
-    return jsonify(result)
-
-@app.route('/albums/info', methods=['GET'])
-def id_albums_results():
-
-    query = request.args.get('seokey')
-
+@app.get("/albums/search")
+async def search_album_results(request: Request, query = None, limit = None): # pylint: disable=unused-argument
+    """
+    Search albums, /albums/search
+    """
     if query is None:
-         return jsonify(noResultsAlbumId())
-
-    result = albums.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/artists/info', methods=['GET'])
-def id_artists_results():
-
-    query = request.args.get('seokey')
-
-    if query is None:
-         return jsonify(noResultsArtistId())
-
-    result = artists.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/trending', methods=['GET'])
-def trending_results():
-
-    lang = request.args.get('lang')
-    limit = request.args.get('limit')
-
-    if lang is None:
-         return jsonify(noResultsTrending())
+        return JSONResponse(content = await noResultsAlbums())
     elif limit is None:
-         result = trending.getTrending(lang, 10)
+        result = await albums.searchAlbum(query, 10)
     else:
-         result = trending.getTrending(lang, limit)
+        result = await albums.searchAlbum(query, limit)
+    return JSONResponse(content = result)
 
-    return jsonify(result)
-
-@app.route('/newreleases', methods=['GET'])
-def newreleases_results():
-
-    lang = request.args.get('lang')
-    limit = request.args.get('limit')
-  
-    if lang is None:
-         return jsonify(noResultsNewReleases())
-    elif limit is None:
-         result = newreleases.getNewReleases(lang, 10)
-    else:
-         result = newreleases.getNewReleases(lang, limit)
-
-    return jsonify(result)
-
-@app.route('/playlists/info', methods=['GET'])
-def playlists_results():
-
-    seokey = request.args.get('seokey')
-
+@app.get("/albums/info")
+async def id_albums_results(request: Request, seokey = None): # pylint: disable=unused-argument
+    """
+    Get info about albums, /albums/info
+    """
     if seokey is None:
-         return jsonify(noResultsPlaylistId())
+        return JSONResponse(content = await noResultsAlbumId())
+    result = await albums.createJsonSeo(seokey)
+    return JSONResponse(content = result)
 
-    result = playlists.getPlaylists(seokey)
+@app.get("/artists/search")
+async def search_artists_results(request: Request, query = None, limit = None): # pylint: disable=unused-argument
+    """
+    Search artists, /artists/search
+    """
+    if query is None:
+        return JSONResponse(content = await noResultsArtists())
+    elif limit is None:
+        result = await artists.searchArtists(query, 10)
+    else:
+        result = await artists.searchArtists(query, limit)
+    return JSONResponse(content = result)
 
-    return jsonify(result)
+@app.get("/artists/info")
+async def id_artists_results(request: Request, seokey = None): # pylint: disable=unused-argument
+    """
+    Get info about artists, /artists/info
+    """
+    if seokey is None:
+        return JSONResponse(content = await noResultsArtistId())
+    result = await artists.createJsonSeo(seokey)
+    return JSONResponse(content = result)
+
+@app.get("/trending")
+async def trending_results(request: Request, lang = None, limit = None): # pylint: disable=unused-argument
+    """
+    Get trending results, /trending
+    """
+    if lang is None:
+        return JSONResponse(content = await noResultsTrending())
+    elif limit is None:
+        result = await trending.getTrending(lang, 10)
+    else:
+        result = await trending.getTrending(lang, limit)
+    return JSONResponse(content = result)
+
+@app.get("/newreleases")
+async def newreleases_results(request: Request, lang = None, limit = None): # pylint: disable=unused-argument
+    """
+    New releases results, /newreleases
+    """
+    if lang is None:
+        return JSONResponse(content = await noResultsNewReleases())
+    elif limit is None:
+        result = await newreleases.getNewReleases(lang, 10)
+    else:
+        result = await newreleases.getNewReleases(lang, limit)
+    return JSONResponse(content = result)
+
+@app.get("/playlists/info")
+async def playlists_results(request: Request, seokey = None): # pylint: disable=unused-argument
+    """
+    Gets info about playlists, /playlists/info
+    """
+    if seokey is None:
+        return JSONResponse(content = await noResultsPlaylistId())
+    result = await playlists.getPlaylists(seokey)
+    return JSONResponse(content = result)
 
 if __name__ == "__main__":
-    app.debug = False
-    app.config['JSON_SORT_KEYS'] = False
-    app.run(host = "0.0.0.0", port = os.getenv("PORT", default = 5000), use_reloader=False, threaded=True)
-    
+    uvicorn.run(app, host = "0.0.0.0", port = int(os.getenv("PORT", default = 5000))) # pylint: disable=invalid-envvar-default
