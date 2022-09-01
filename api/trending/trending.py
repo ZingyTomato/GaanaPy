@@ -1,8 +1,6 @@
 import requests
-from json import JSONDecoder
 import json
-import time
-from api.functions import *
+from api import functions
 from api.songs import songs
 
 def getTrending(language, limit):
@@ -29,6 +27,6 @@ def getTrending(language, limit):
       pass
 
   if len(ids) == 0:
-    return noSearchResults()
+    return functions.noSearchResults()
 
   return songs.createJson(ids)

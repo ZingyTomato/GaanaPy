@@ -1,7 +1,5 @@
 from Crypto.Cipher import AES
 import base64
-import json
-import time
 from flask import jsonify
 
 headers = {
@@ -160,13 +158,13 @@ def decryptLink(link):
    stream_url = unpad((aes.decrypt(base64.b64decode(link))).decode('utf-8'))
 
    if "https://vodhlsgaana.akamaized.net" in stream_url:
-     
      stream_url = stream_url.replace("96.mp4.master", "320.mp4.master")
      return stream_url
 
    return stream_url
 
 def unpad(s): 
+  
   return s[0:-ord(s[-1])]
 
 def findArtistNames(results):

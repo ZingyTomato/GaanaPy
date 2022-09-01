@@ -1,14 +1,12 @@
 import requests
-from json import JSONDecoder
 import json
-import time
-from api.functions import *
+from api import functions
 
 def getCharts(limit):
     
     url = f"https://gaana.com/apiv2?page=0&type=miscTopCharts"
 
-    response = requests.request("POST", url, headers=headers).text.encode()
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
 
     results = json.loads(response)
 
@@ -20,7 +18,6 @@ def getCharts(limit):
 
     for i in range(0,int(limit)):
       try:
-
         if results['entities'][int(i)]['entity_type'] == "PL":
 
           data = {}
@@ -41,7 +38,6 @@ def getCharts(limit):
           data['images']['urls']['small_artwork'] = (results['entities'][int(i)]['atwj']).replace("size_m.jpg", "size_s.jpg")
 
           final_json.append(data)
-
       except IndexError:
         pass
 

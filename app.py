@@ -1,29 +1,27 @@
-from flask import Flask, request, redirect, jsonify, json
-import json
+from flask import Flask, jsonify, request
 from api.songs import songs
 from api.albums import albums
 from api.artists import artists
 from api.trending import trending
 from api.playlists import playlists
-from api.recommend import recommend
+from api.similar import similar
 from api.newreleases import newreleases
 from api.charts import charts
-from api.functions import *
-import os
+from api import functions
 
 app = Flask(__name__)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return jsonify(page404())
+    return jsonify(functions.page404())
 
 @app.errorhandler(500)
 def page_not_found(e):
-    return jsonify(page500())
+    return jsonify(functions.page500())
 
 @app.route('/', methods=['GET'])
 def landing_page():
-    return jsonify(errorMessage())
+    return jsonify(functions.errorMessage())
 
 @app.route('/songs/search', methods=['GET'])
 def search_results():
@@ -32,7 +30,7 @@ def search_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return jsonify(noResults())
+         return jsonify(functions.noResults())
     elif limit is None:
          result = songs.searchSong(query, 10)
     else:
@@ -46,7 +44,7 @@ def id_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return jsonify(noResultsId())
+         return jsonify(functions.noResultsId())
 
     result = songs.createJsonSeo(query)
 
@@ -59,11 +57,11 @@ def recommend_songs_results():
     limit = request.args.get('limit')
 
     if track_id is None:
-         return jsonify(noResultsRecommendationsSongs())
+         return jsonify(functions.noResultsRecommendationsSongs())
     elif limit is None:
-         result = recommend.createJsonRecommendationsSongs(track_id, 20)
+         result = recommend.createJsonSimilarSongs(track_id, 20)
     else:
-         result = recommend.createJsonRecommendationsSongs(track_id, limit)
+         result = recommend.createJsonSimilarSongs(track_id, limit)
 
     return jsonify(result)
 
@@ -74,11 +72,11 @@ def recommend_album_results():
     limit = request.args.get('limit')
 
     if album_id is None:
-         return jsonify(noResultsRecommendationsAlbums())
+         return jsonify(functions.noResultsRecommendationsAlbums())
     elif limit is None:
-         result = recommend.createJsonRecommendationsAlbums(album_id, 10)
+         result = recommend.createJsonSimilarAlbums(album_id, 10)
     else:
-         result = recommend.createJsonRecommendationsAlbums(album_id, limit)
+         result = recommend.createJsonSimilarAlbums(album_id, limit)
 
     return jsonify(result)
 
@@ -89,11 +87,11 @@ def recommend_artists_results():
     limit = request.args.get('limit')
 
     if artist_id is None:
-         return jsonify(noResultsRecommendationsArtists())
+         return jsonify(functions.noResultsRecommendationsArtists())
     elif limit is None:
-         result = recommend.createJsonRecommendationsArtists(artist_id, 10)
+         result = recommend.createJsonSimilarArtists(artist_id, 10)
     else:
-         result = recommend.createJsonRecommendationsArtists(artist_id, limit)
+         result = recommend.createJsonSimilarArtists(artist_id, limit)
 
     return jsonify(result)
 
@@ -104,7 +102,7 @@ def search_album_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return jsonify(noResultsAlbums())
+         return jsonify(functions.noResultsAlbums())
     elif limit is None:
          result = albums.searchAlbum(query, 10)
     else:
@@ -119,7 +117,7 @@ def search_artists_results():
     limit = request.args.get('limit')
 
     if query is None:
-         return jsonify(noResultsArtists())
+         return jsonify(functions.noResultsArtists())
     elif limit is None:
          result = artists.searchArtists(query, 10)
     else:
@@ -133,7 +131,7 @@ def id_albums_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return jsonify(noResultsAlbumId())
+         return jsonify(functions.noResultsAlbumId())
 
     result = albums.createJsonSeo(query)
 
@@ -145,7 +143,7 @@ def id_artists_results():
     query = request.args.get('seokey')
 
     if query is None:
-         return jsonify(noResultsArtistId())
+         return jsonify(functions.noResultsArtistId())
 
     result = artists.createJsonSeo(query)
 
@@ -158,7 +156,7 @@ def trending_results():
     limit = request.args.get('limit')
 
     if lang is None:
-         return jsonify(noResultsTrending())
+         return jsonify(functions.noResultsTrending())
     elif limit is None:
          result = trending.getTrending(lang, 10)
     else:
@@ -173,7 +171,7 @@ def newreleases_results():
     limit = request.args.get('limit')
   
     if lang is None:
-         return jsonify(noResultsNewReleases())
+         return jsonify(functions.noResultsNewReleases())
     elif limit is None:
          result = newreleases.getNewReleases(lang, 10)
     else:
@@ -199,7 +197,7 @@ def playlists_results():
     seokey = request.args.get('seokey')
 
     if seokey is None:
-         return jsonify(noResultsPlaylistId())
+         return jsonify(functions.noResultsPlaylistId())
 
     result = playlists.getPlaylists(seokey)
 
@@ -208,5 +206,4 @@ def playlists_results():
 if __name__ == "__main__":
     app.debug = False
     app.config['JSON_SORT_KEYS'] = False
-    app.run(host = "0.0.0.0", port = os.getenv("PORT", default = 5000), use_reloader=False, threaded=True)
-    
+    app.run(host="0.0.0.0", port=5000, use_reloader=False, threaded=True)

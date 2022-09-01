@@ -1,15 +1,13 @@
 import requests
-from json import JSONDecoder
 import json
-import time
-from api.functions import *
+from api import functions
 from api.songs import songs
 
 def getPlaylists(seokey):
 
   url = f"https://gaana.com/apiv2?seokey={seokey}&type=playlistDetail"
 
-  response = requests.request("POST", url, headers=headers).text.encode()
+  response = requests.request("POST", url, headers=functions.headers).text.encode()
 
   result = json.loads(response)
 
@@ -26,6 +24,6 @@ def getPlaylists(seokey):
       pass
 
   if len(ids) == 0:
-    return incorrectSeokey()
+    return functions.incorrectSeokey()
 
   return songs.createJson(ids)

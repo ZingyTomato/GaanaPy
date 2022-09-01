@@ -1,18 +1,18 @@
 import requests
 import json
-from api.functions import *
+from api import functions
 
-def createJsonRecommendationsSongs(song_id, limit):
+def createJsonSimilarSongs(song_id, limit):
     
     final_json = []
 
     data = {}    
-    response = requests.request("POST", f"https://gaana.com/apiv2?id={song_id}&type=songSimilar", headers=headers).text.encode()
+    response = requests.request("POST", f"https://gaana.com/apiv2?id={song_id}&type=songSimilar", headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)
     except json.decoder.JSONDecodeError:
-      return noSearchResults()
+      return functions.noSearchResults()
 
     if int(limit) > int(results['count']):
       limit = results['count']
@@ -24,16 +24,16 @@ def createJsonRecommendationsSongs(song_id, limit):
       try:
         data['seokey'] = results['tracks'][int(i)]['seokey']
       except IndexError:
-        return trackInactive()
+        return functions.trackInactive()
         
       data['track_id'] = results['tracks'][int(i)]['track_id']
       data['title'] = results['tracks'][int(i)]['track_title']
-      data['artists'] = findArtistNames(results['tracks'][int(i)]['artist'])
-      data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][int(i)]['artist'])
-      data['artist_ids'] = findArtistIds(results['tracks'][int(i)]['artist'])
+      data['artists'] = functions.findArtistNames(results['tracks'][int(i)]['artist'])
+      data['artist_seokeys'] = functions.findArtistSeoKeys(results['tracks'][int(i)]['artist'])
+      data['artist_ids'] = functions.findArtistIds(results['tracks'][int(i)]['artist'])
       data['album'] = results['tracks'][int(i)]['album_title']
       data['duration'] = results['tracks'][int(i)]['duration']
-      data['genres'] = findGenres(results['tracks'][int(i)]['gener'])
+      data['genres'] = functions.findGenres(results['tracks'][int(i)]['gener'])
       data['is_explicit'] = results['tracks'][int(i)]['parental_warning']
       data['language'] = results['tracks'][int(i)]['language']
       data['release_date'] = results['tracks'][int(i)]['release_date']
@@ -50,18 +50,18 @@ def createJsonRecommendationsSongs(song_id, limit):
 
     return final_json
 
-def createJsonRecommendationsAlbums(album_id, limit):
+def createJsonSimilarAlbums(album_id, limit):
     
     final_json = []
 
     data = {}    
 
-    response = requests.request("POST", f"https://gaana.com/apiv2?id={album_id}&type=albumSimilar", headers=headers).text.encode()
+    response = requests.request("POST", f"https://gaana.com/apiv2?id={album_id}&type=albumSimilar", headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)
     except json.decoder.JSONDecodeError:
-      return noSearchResults()
+      return functions.noSearchResults()
 
     if int(limit) > int(results['count']):
       limit = results['count']
@@ -77,11 +77,11 @@ def createJsonRecommendationsAlbums(album_id, limit):
         
       data['album_id'] = results['album'][int(i)]['album_id']
       data['title'] = results['album'][int(i)]['title']
-      data['artists'] = findArtistNames(results['album'][int(i)]['artist'])
-      data['artist_seokeys'] = findArtistSeoKeys(results['album'][int(i)]['artist'])
-      data['artist_ids'] = findArtistIds(results['album'][int(i)]['artist'])
+      data['artists'] = functions.findArtistNames(results['album'][int(i)]['artist'])
+      data['artist_seokeys'] = functions.findArtistSeoKeys(results['album'][int(i)]['artist'])
+      data['artist_ids'] = functions.findArtistIds(results['album'][int(i)]['artist'])
       data['duration'] = results['album'][int(i)]['duration']
-      data['genres'] = findGenres(results['album'][int(i)]['gener'])
+      data['genres'] = functions.findGenres(results['album'][int(i)]['gener'])
       data['is_explicit'] = results['album'][int(i)]['parental_warning']
       data['language'] = results['album'][int(i)]['language']
       data['release_date'] = results['album'][int(i)]['trackcount']
@@ -98,18 +98,18 @@ def createJsonRecommendationsAlbums(album_id, limit):
 
     return final_json
 
-def createJsonRecommendationsArtists(artist_id, limit):
+def createJsonSimilarArtists(artist_id, limit):
     
     final_json = []
 
     data = {}    
 
-    response = requests.request("POST", f"https://gaana.com/apiv2?apiPath=https%3A%2F%2Fapiv2.gaana.com%2Fplayer%2Fsimilar-artists%2F{artist_id}&index=4&type=artistDetailSection", headers=headers).text.encode()
+    response = requests.request("POST", f"https://gaana.com/apiv2?apiPath=https%3A%2F%2Fapiv2.gaana.com%2Fplayer%2Fsimilar-artists%2F{artist_id}&index=4&type=artistDetailSection", headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)
     except json.decoder.JSONDecodeError:
-      return noSearchResults()
+      return functions.noSearchResults()
 
     if int(limit) > int(results['count']):
       limit = results['count']

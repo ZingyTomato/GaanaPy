@@ -1,15 +1,13 @@
 import requests
-from json import JSONDecoder
 import json
-import time
-from api.functions import *
+from api import functions
 from api.songs import songs
 
 def searchAlbum(query, limit):
 
   url = f"https://gaana.com/apiv2?country=IN&page=0&secType=album&type=search&keyword={query}"
 
-  response = requests.request("POST", url, headers=headers).text.encode()
+  response = requests.request("POST", url, headers=functions.headers).text.encode()
 
   result = json.loads(response)
 
@@ -22,7 +20,7 @@ def searchAlbum(query, limit):
       pass
 
   if len(ids) == 0:
-    return noSearchResults()
+    return functions.noSearchResults()
   
   return createJson(ids)
 
@@ -33,7 +31,7 @@ def createJson(result):
     for seokey in result:
 
       data = {}
-      response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=headers).text.encode()
+      response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=functions.headers).text.encode()
       results = json.loads(response)
 
       data['seokey'] = results['album']['seokey']
@@ -41,9 +39,9 @@ def createJson(result):
       data['title'] = results['album']['title']
 
       try:
-        data['artists'] = findArtistNames(results['album']['artist'])
-        data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
-        data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
+        data['artists'] = functions.findArtistNames(results['album']['artist'])
+        data['artist_seokeys'] = functions.findArtistSeoKeys(results['tracks'][0]['artist'])
+        data['artist_ids'] = functions.findArtistIds(results['tracks'][0]['artist'])
       except (KeyError, IndexError):
         data['artists'] = ""
         data['artist_seokeys'] = ""
@@ -81,21 +79,21 @@ def createJsonSeo(seokey):
     seokeys = []
 
     data = {}
-    response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=headers).text.encode()
+    response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=albumDetail", headers=functions.headers).text.encode()
     results = json.loads(response)
 
     try:
       data['seokey'] = results['album']['seokey']
     except (KeyError, TypeError):
-      return incorrectSeokey()
+      return functions.incorrectSeokey()
 
     data['album_id'] = results['album']['album_id']
     data['title'] = results['album']['title']
 
     try:
-      data['artists'] = findArtistNames(results['album']['artist'])
-      data['artist_seokeys'] = findArtistSeoKeys(results['tracks'][0]['artist'])
-      data['artist_ids'] = findArtistIds(results['tracks'][0]['artist'])
+      data['artists'] = functions.findArtistNames(results['album']['artist'])
+      data['artist_seokeys'] = functions.findArtistSeoKeys(results['tracks'][0]['artist'])
+      data['artist_ids'] = functions.findArtistIds(results['tracks'][0]['artist'])
     except (KeyError, IndexError):
       data['artists'] = ""
       data['artist_seokeys'] = ""
@@ -121,7 +119,7 @@ def createJsonSeo(seokey):
       for i in range(0,int(data['track_count'])):
         seokeys.append(results['tracks'][i]['seokey'])
     except IndexError:
-      return albumInactive()
+      return functions.albumInactive()
 
     data['tracks'] = songs.createJson(seokeys)
 
