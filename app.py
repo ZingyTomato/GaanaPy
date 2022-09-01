@@ -59,9 +59,9 @@ def recommend_songs_results():
     if track_id is None:
          return jsonify(functions.noResultsRecommendationsSongs())
     elif limit is None:
-         result = recommend.createJsonSimilarSongs(track_id, 20)
+         result = similar.createJsonSimilarSongs(track_id, 20)
     else:
-         result = recommend.createJsonSimilarSongs(track_id, limit)
+         result = similar.createJsonSimilarSongs(track_id, limit)
 
     return jsonify(result)
 
@@ -74,9 +74,9 @@ def recommend_album_results():
     if album_id is None:
          return jsonify(functions.noResultsRecommendationsAlbums())
     elif limit is None:
-         result = recommend.createJsonSimilarAlbums(album_id, 10)
+         result = similar.createJsonSimilarAlbums(album_id, 10)
     else:
-         result = recommend.createJsonSimilarAlbums(album_id, limit)
+         result = similar.createJsonSimilarAlbums(album_id, limit)
 
     return jsonify(result)
 
@@ -89,9 +89,9 @@ def recommend_artists_results():
     if artist_id is None:
          return jsonify(functions.noResultsRecommendationsArtists())
     elif limit is None:
-         result = recommend.createJsonSimilarArtists(artist_id, 10)
+         result = similar.createJsonSimilarArtists(artist_id, 10)
     else:
-         result = recommend.createJsonSimilarArtists(artist_id, limit)
+         result = similar.createJsonSimilarArtists(artist_id, limit)
 
     return jsonify(result)
 

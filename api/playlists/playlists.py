@@ -1,12 +1,11 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 from api.songs import songs
 
 def getPlaylists(seokey):
 
-  url = f"https://gaana.com/apiv2?seokey={seokey}&type=playlistDetail"
-
+  url = endpoints.playlist_details_url + seokey
   response = requests.request("POST", url, headers=functions.headers).text.encode()
 
   result = json.loads(response)

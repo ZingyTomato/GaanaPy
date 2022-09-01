@@ -1,12 +1,11 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 from api.songs import songs
 
 def searchArtists(query, limit):
 
-  url = f"https://gaana.com/apiv2?country=IN&page=0&secType=artist&type=search&keyword={query}"
-
+  url = endpoints.search_artists_url + query
   response = requests.request("POST", url, headers=functions.headers).text.encode()
 
   result = json.loads(response)
@@ -30,7 +29,8 @@ def createJson(result):
 
     for seokey in result:
       data = {}
-      response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=artistDetail", headers=functions.headers).text.encode()
+      url = endpoints.artist_details_url + seokey
+      response = requests.request("POST", url, headers=functions.headers).text.encode()
       results = json.loads(response)
 
       data['seokey'] = results['artist'][0]['seokey']
@@ -51,12 +51,13 @@ def createJson(result):
 
     return final_json
 
-def createJsonSeo(result):
+def createJsonSeo(seokey):
 
     final_json = []
 
     data = {}
-    response = requests.request("POST", f"https://gaana.com/apiv2?seokey={result}&type=artistDetail", headers=functions.headers).text.encode()
+    url = endpoints.artist_details_url + seokey
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
     results = json.loads(response)
 
     try:
@@ -88,7 +89,8 @@ def top_tracks(artist_id):
 
     seokeys = []
 
-    response = requests.request("POST", f"https://gaana.com/apiv2?id={artist_id}&language=&order=0&page=0&sortBy=popularity&type=artistTrackList", headers=functions.headers).text.encode()
+    url = endpoints.artist_top_tracks + artist_id
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
     results = json.loads(response)
 
     for i,track in enumerate(results['entities']):

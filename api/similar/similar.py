@@ -1,13 +1,14 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 
 def createJsonSimilarSongs(song_id, limit):
     
     final_json = []
 
     data = {}    
-    response = requests.request("POST", f"https://gaana.com/apiv2?id={song_id}&type=songSimilar", headers=functions.headers).text.encode()
+    url = endpoints.similar_songs_url + song_id
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)
@@ -55,8 +56,8 @@ def createJsonSimilarAlbums(album_id, limit):
     final_json = []
 
     data = {}    
-
-    response = requests.request("POST", f"https://gaana.com/apiv2?id={album_id}&type=albumSimilar", headers=functions.headers).text.encode()
+    url = endpoints.similar_albums_url + album_id
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)

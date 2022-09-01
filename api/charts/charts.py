@@ -1,11 +1,10 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 
 def getCharts(limit):
     
-    url = f"https://gaana.com/apiv2?page=0&type=miscTopCharts"
-
+    url = endpoints.charts_url
     response = requests.request("POST", url, headers=functions.headers).text.encode()
 
     results = json.loads(response)

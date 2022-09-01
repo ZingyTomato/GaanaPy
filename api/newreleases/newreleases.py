@@ -1,13 +1,12 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 from api.songs import songs
 from api.albums import albums
 
 def getNewReleases(language, limit):
 
-  url = f"https://gaana.com/apiv2?language={language}&page=0&type=miscNewRelease"
-
+  url = endpoints.new_releases_url + language
   response = requests.request("POST", url, headers=functions.headers).text.encode()
 
   result = json.loads(response)

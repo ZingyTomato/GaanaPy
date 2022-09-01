@@ -1,10 +1,10 @@
 import requests
 import json
-from api import functions
+from api import functions, endpoints
 
 def searchSong(query, limit):
 
-  url = f"https://gaana.com/apiv2?country=IN&page=0&secType=track&type=search&keyword={query}"
+  url = endpoints.search_songs_url + query
 
   response = requests.request("POST", url, headers=functions.headers).text.encode()
 
@@ -29,7 +29,8 @@ def createJson(result):
 
     for seokey in result:
       data = {}
-      response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=songDetail", headers=functions.headers).text.encode()
+      url = endpoints.song_details_url + seokey
+      response = requests.request("POST", url, headers=functions.headers).text.encode()
       results = json.loads(response)
 
       data['seokey'] = results['tracks'][0]['seokey']
@@ -79,7 +80,8 @@ def createJsonSeo(seokey):
     final_json = []
 
     data = {}
-    response = requests.request("POST", f"https://gaana.com/apiv2?seokey={seokey}&type=songDetail", headers=functions.headers).text.encode()
+    url = endpoints.song_details_url + seokey
+    response = requests.request("POST", url, headers=functions.headers).text.encode()
     results = json.loads(response)
 
     try:
