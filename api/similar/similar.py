@@ -105,7 +105,7 @@ def createJsonSimilarArtists(artist_id, limit):
 
     data = {}    
 
-    response = requests.request("POST", f"https://gaana.com/apiv2?apiPath=https%3A%2F%2Fapiv2.gaana.com%2Fplayer%2Fsimilar-artists%2F{artist_id}&index=4&type=artistDetailSection", headers=functions.headers).text.encode()
+    response = requests.request("POST", f"https://gaana.com/apiv2?apiPath=https://apiv2.gaana.com/player/similar-artists/{artist_id}&index=4&type=artistDetailSection", headers=functions.headers).text.encode()
     
     try:
       results = json.loads(response)
