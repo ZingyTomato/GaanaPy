@@ -201,7 +201,7 @@ https://api.nikomusic.tk/charts
 **Example:** Create a GET request or navigate to `https://api.nikomusic.tk/charts` to get a JSON response of the top charts.
 
 ----
-##### **Get Similar Songs**: ()
+##### **Get Similar Songs**:
 ```sh
 https://api.nikomusic.tk/songs/similar?track_id=<insert-track-id-here>&limit=<insert-limit-here, eg. 5>
 ```
