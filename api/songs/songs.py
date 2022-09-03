@@ -33,7 +33,10 @@ def createJson(result):
       response = requests.request("POST", url, headers=functions.headers).text.encode()
       results = json.loads(response)
 
-      data['seokey'] = results['tracks'][0]['seokey']
+      try:
+        data['seokey'] = results['tracks'][0]['seokey']
+      except TypeError:
+        pass
       data['album_seokey'] = results['tracks'][0]['albumseokey']
       data['track_id'] = results['tracks'][0]['track_id']
       data['title'] = results['tracks'][0]['track_title']
