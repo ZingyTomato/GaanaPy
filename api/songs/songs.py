@@ -35,9 +35,9 @@ def createJson(result):
 
       try:
         data['seokey'] = results['tracks'][0]['seokey']
+        data['album_seokey'] = results['tracks'][0]['albumseokey']
       except TypeError:
-        pass
-      data['album_seokey'] = results['tracks'][0]['albumseokey']
+        return
       data['track_id'] = results['tracks'][0]['track_id']
       data['title'] = results['tracks'][0]['track_title']
       data['artists'] = functions.findArtistNames(results['tracks'][0]['artist'])
