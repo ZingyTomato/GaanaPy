@@ -28,7 +28,7 @@ def getTrending(language, limit):
   for i in range(0,int(limit)):
     try:
       ids.append(result['entities'][int(i)]['seokey'])
-    except IndexError:
+    except (IndexError, TypeError, KeyError):
       pass
 
   if len(ids) == 0:

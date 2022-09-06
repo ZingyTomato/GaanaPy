@@ -19,7 +19,7 @@ def getPlaylists(seokey):
   for i in range(0,int(track_count)):
     try:
       ids.append(result['tracks'][int(i)]['seokey'])
-    except IndexError:
+    except (IndexError, TypeError, KeyError):
       pass
 
   if len(ids) == 0:

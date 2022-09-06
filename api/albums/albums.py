@@ -20,7 +20,7 @@ def searchAlbum(query, limit):
   for i in range(0,int(limit)):
     try:
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
-    except (IndexError, TypeError):
+    except (IndexError, TypeError, KeyError):
       pass
 
   if len(ids) == 0:

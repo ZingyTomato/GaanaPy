@@ -26,7 +26,7 @@ def getNewReleases(language, limit):
         album_ids.append(result['entities'][int(i)]['seokey'])
       elif result['entities'][int(i)]['entity_type'] == "TR":
         track_ids.append(result['entities'][int(i)]['seokey'])
-    except IndexError:
+    except (IndexError, TypeError, KeyError):
       pass
 
   if len(track_ids) and len(album_ids) == 0:

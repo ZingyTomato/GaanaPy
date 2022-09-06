@@ -29,7 +29,7 @@ def createJsonSimilarSongs(song_id, limit):
 
       try:
         data['seokey'] = results['tracks'][int(i)]['seokey']
-      except IndexError:
+      except (IndexError, TypeError, KeyError):
         return functions.trackInactive()
         
       data['track_id'] = results['tracks'][int(i)]['track_id']
@@ -83,7 +83,7 @@ def createJsonSimilarAlbums(album_id, limit):
 
       try:
         data['seokey'] = results['album'][int(i)]['seokey']
-      except IndexError:
+      except (IndexError, TypeError, KeyError):
         pass
         
       data['album_id'] = results['album'][int(i)]['album_id']
@@ -136,7 +136,7 @@ def createJsonSimilarArtists(artist_id, limit):
 
       try:
         data['seokey'] = results['entities'][int(i)]['seokey']
-      except IndexError:
+      except (IndexError, TypeError, KeyError):
         pass
         
       data['artist_id'] = results['entities'][int(i)]['entity_id']

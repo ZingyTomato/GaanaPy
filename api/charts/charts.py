@@ -42,7 +42,7 @@ def getCharts(limit):
           data['images']['urls']['small_artwork'] = (results['entities'][int(i)]['atwj']).replace("size_m.jpg", "size_s.jpg")
 
           final_json.append(data)
-      except IndexError:
+      except (IndexError, TypeError, KeyError):
         pass
 
     return final_json
