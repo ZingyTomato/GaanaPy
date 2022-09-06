@@ -15,6 +15,11 @@ def createJsonSimilarSongs(song_id, limit):
     except json.decoder.JSONDecodeError:
       return functions.noSearchResults()
 
+    try:
+      limit = int(limit)
+    except ValueError:
+      limit = 10
+
     if int(limit) > int(results['count']):
       limit = results['count']
       
@@ -64,6 +69,11 @@ def createJsonSimilarAlbums(album_id, limit):
     except json.decoder.JSONDecodeError:
       return functions.noSearchResults()
 
+    try:
+      limit = int(limit)
+    except ValueError:
+      limit = 10
+
     if int(limit) > int(results['count']):
       limit = results['count']
       
@@ -111,6 +121,11 @@ def createJsonSimilarArtists(artist_id, limit):
       results = json.loads(response)
     except json.decoder.JSONDecodeError:
       return functions.noSearchResults()
+
+    try:
+      limit = int(limit)
+    except ValueError:
+      limit = 10
 
     if int(limit) > int(results['count']):
       limit = results['count']

@@ -12,10 +12,15 @@ def searchSong(query, limit):
 
   ids = []
 
+  try:
+    limit = int(limit)
+  except ValueError:
+    limit = 10
+  
   for i in range(0,int(limit)):
     try:
       ids.append(result['gr'][0]['gd'][int(i)]['seo'])
-    except (IndexError, TypeError):
+    except (IndexError, TypeError, KeyError):
       pass
   
   if len(ids) == 0:

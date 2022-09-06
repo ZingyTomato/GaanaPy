@@ -15,6 +15,11 @@ def getNewReleases(language, limit):
 
   track_ids = []
 
+  try:
+    limit = int(limit)
+  except ValueError:
+    limit = 10
+
   for i in range(0,int(limit)):
     try:
       if result['entities'][int(i)]['entity_type'] == "AL":

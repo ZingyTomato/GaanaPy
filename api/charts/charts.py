@@ -15,6 +15,11 @@ def getCharts(limit):
 
     track_count = results['count']
 
+    try:
+      limit = int(limit)
+    except ValueError:
+      limit = 10
+
     for i in range(0,int(limit)):
       try:
         if results['entities'][int(i)]['entity_type'] == "PL":
@@ -41,4 +46,3 @@ def getCharts(limit):
         pass
 
     return final_json
-
