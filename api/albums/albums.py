@@ -39,7 +39,10 @@ def createJson(result):
       response = requests.request("POST", url, headers=functions.headers).text.encode()
       results = json.loads(response)
 
-      data['seokey'] = results['album']['seokey']
+      try:
+        data['seokey'] = results['album']['seokey']
+      except (IndexError, TypeError, KeyError):
+        return final_json
       data['album_id'] = results['album']['album_id']
       data['title'] = results['album']['title']
 

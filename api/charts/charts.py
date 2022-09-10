@@ -5,8 +5,8 @@ from api import functions, endpoints
 def getCharts(limit):
     
     url = endpoints.charts_url
+    
     response = requests.request("POST", url, headers=functions.headers).text.encode()
-
     results = json.loads(response)
 
     playlist_ids = []

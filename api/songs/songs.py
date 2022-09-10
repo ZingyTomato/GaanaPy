@@ -42,7 +42,8 @@ def createJson(result):
         data['seokey'] = results['tracks'][0]['seokey']
         data['album_seokey'] = results['tracks'][0]['albumseokey']
       except (IndexError, TypeError, KeyError):
-        return
+        return final_json
+        
       data['track_id'] = results['tracks'][0]['track_id']
       data['title'] = results['tracks'][0]['track_title']
       data['artists'] = functions.findArtistNames(results['tracks'][0]['artist'])

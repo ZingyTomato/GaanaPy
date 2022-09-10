@@ -6,8 +6,8 @@ from api.songs import songs
 def getPlaylists(seokey):
 
   url = endpoints.playlist_details_url + seokey
+  
   response = requests.request("POST", url, headers=functions.headers).text.encode()
-
   result = json.loads(response)
 
   ids = []

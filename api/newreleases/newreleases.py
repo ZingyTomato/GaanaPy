@@ -7,8 +7,8 @@ from api.albums import albums
 def getNewReleases(language, limit):
 
   url = endpoints.new_releases_url + language
+  
   response = requests.request("POST", url, headers=functions.headers).text.encode()
-
   result = json.loads(response)
 
   album_ids = []

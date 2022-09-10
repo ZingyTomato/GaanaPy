@@ -13,7 +13,6 @@ def getTrending(language, limit):
   }
 
   response = requests.request("POST", url, headers=headers).text.encode()
-
   result = json.loads(response)
 
   ids = []
