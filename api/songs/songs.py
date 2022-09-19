@@ -5,9 +5,7 @@ from api import functions, endpoints
 def searchSong(query, limit):
 
   url = endpoints.search_songs_url + query
-
   response = requests.request("POST", url, headers=functions.headers).text.encode()
-
   result = json.loads(response)
 
   ids = []

@@ -7,7 +7,6 @@ def searchAlbum(query, limit):
 
   url = endpoints.search_albums_url + query
   response = requests.request("POST", url, headers=functions.headers).text.encode()
-
   result = json.loads(response)
 
   ids = []

@@ -5,7 +5,6 @@ from api import functions, endpoints
 def getCharts(limit):
     
     url = endpoints.charts_url
-    
     response = requests.request("POST", url, headers=functions.headers).text.encode()
     results = json.loads(response)
 
@@ -25,7 +24,6 @@ def getCharts(limit):
         if results['entities'][int(i)]['entity_type'] == "PL":
 
           data = {}
-
           data['seokey'] = results['entities'][int(i)]['seokey']
           data['playlist_id'] = results['entities'][int(i)]['entity_id']
           data['title'] = results['entities'][int(i)]['name']

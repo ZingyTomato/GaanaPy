@@ -7,7 +7,6 @@ from api.albums import albums
 def getNewReleases(language, limit):
 
   url = endpoints.new_releases_url + language
-  
   response = requests.request("POST", url, headers=functions.headers).text.encode()
   result = json.loads(response)
 
@@ -35,7 +34,6 @@ def getNewReleases(language, limit):
   data = {}
 
   data['tracks'] = songs.createJson(track_ids)
-
   data['albums'] = albums.createJson(album_ids)
 
   return data
