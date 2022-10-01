@@ -116,13 +116,13 @@ def noResultsRecommendationsSongs():
 
 def noResultsRecommendationsAlbums():
 
-    landing_info={'ERROR': 'Please enter a valid track ID! /albums/similar?album_id=ALBUM_ID'}
+    landing_info={'ERROR': 'Please enter a valid album ID! /albums/similar?album_id=ALBUM_ID'}
 
     return landing_info
 
 def noResultsRecommendationsArtists():
 
-    landing_info={'ERROR': 'Please enter a valid track ID! /artists/similar?artist_id=ARTIST_ID'}
+    landing_info={'ERROR': 'Please enter a valid artist ID! /artists/similar?artist_id=ARTIST_ID'}
 
     return landing_info
 
@@ -148,6 +148,30 @@ def invalidInteger():
 
     landing_info = {'ERROR':'Please enter a valid limit integer!'}
         
+    return landing_info
+
+def noSimilarResults():
+
+    landing_info = {'ERROR': 'Unable to find any similar results! This seems to be an issue on Gaanas end.'}
+
+    return landing_info
+
+def noTrending():
+
+    landing_info = {'ERROR': 'Unable to find any trending tracks!'}
+
+    return landing_info
+
+def noNewReleases():
+
+    landing_info = {'ERROR': 'Unable to find any new tracks/albums!'}
+
+    return landing_info
+
+def noCharts():
+
+    landing_info = {'ERROR': 'Unable to find any charts!'}
+
     return landing_info
 
 def decryptLink(link):

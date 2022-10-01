@@ -36,6 +36,9 @@ def search_results():
     else:
          result = songs.searchSong(query, limit)
 
+    if result == []:
+     return jsonify(functions.noSearchResults())
+    
     return jsonify(result)
 
 @app.route('/songs/info', methods=['GET'])
@@ -63,6 +66,9 @@ def recommend_songs_results():
     else:
          result = similar.createJsonSimilarSongs(track_id, limit)
 
+    if result == []:
+     return jsonify(functions.noSimilarResults())
+
     return jsonify(result)
 
 @app.route('/albums/similar', methods=['GET'])
@@ -77,6 +83,9 @@ def recommend_album_results():
          result = similar.createJsonSimilarAlbums(album_id, 10)
     else:
          result = similar.createJsonSimilarAlbums(album_id, limit)
+
+    if result == []:
+     return jsonify(functions.noSimilarResults())
 
     return jsonify(result)
 
@@ -93,6 +102,9 @@ def recommend_artists_results():
     else:
          result = similar.createJsonSimilarArtists(artist_id, limit)
 
+    if result == []:
+     return jsonify(functions.noSimilarResults())
+
     return jsonify(result)
 
 @app.route('/albums/search', methods=['GET'])
@@ -108,6 +120,9 @@ def search_album_results():
     else:
          result = albums.searchAlbum(query, limit)
 
+    if result == []:
+     return jsonify(functions.noSearchResults())
+
     return jsonify(result)
 
 @app.route('/artists/search', methods=['GET'])
@@ -122,6 +137,9 @@ def search_artists_results():
          result = artists.searchArtists(query, 10)
     else:
          result = artists.searchArtists(query, limit)
+
+    if result == []:
+     return jsonify(functions.noSearchResults())
 
     return jsonify(result)
 
@@ -162,6 +180,9 @@ def trending_results():
     else:
          result = trending.getTrending(lang, limit)
 
+    if result == []:
+     return jsonify(functions.noTrending())
+
     return jsonify(result)
 
 @app.route('/newreleases', methods=['GET'])
@@ -177,6 +198,9 @@ def newreleases_results():
     else:
          result = newreleases.getNewReleases(lang, limit)
 
+    if result == []:
+     return jsonify(functions.noNewReleases())
+
     return jsonify(result)
 
 @app.route('/charts', methods=['GET'])
@@ -188,6 +212,9 @@ def charts_results():
          result = charts.getCharts(10)
     else:
          result = charts.getCharts(limit)
+
+    if result == []:
+     return jsonify(functions.noCharts())
 
     return jsonify(result)
 
