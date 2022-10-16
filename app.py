@@ -1,236 +1,95 @@
-from flask import Flask, jsonify, request
-from api.songs import songs
-from api.albums import albums
-from api.artists import artists
-from api.trending import trending
-from api.playlists import playlists
-from api.similar import similar
-from api.newreleases import newreleases
-from api.charts import charts
-from api import functions
+from fastapi import FastAPI, Query
+from fastapi.openapi.utils import get_openapi
+from api.gaanapy import GaanaPy
+from typing import Optional
 
-app = Flask(__name__)
+app = FastAPI()
+gaanapy = GaanaPy()
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return jsonify(functions.page404())
+@app.get("/")
+async def home() -> dict:
+    return {"Docs": "https://api.nikomusic.tk/docs", "Github": 'https://github.com/ZingyTomato/GaanaPy'}
 
-@app.errorhandler(500)
-def page_not_found(e):
-    return jsonify(functions.page500())
+@app.get("/songs/search/")
+async def songs_search(query: str = Query(description="Name of the song to search for."), 
+limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.search_songs(query, limit)
+    return result
 
-@app.route('/', methods=['GET'])
-def landing_page():
-    return jsonify(functions.errorMessage())
+@app.get("/songs/info/")
+async def songs_info(seokey: str = Query(description="The `seokey` of the song. Example: `tyler-herro` in `https://gaana.com/song/tyler-herro`")) -> dict:
+    track_list = []
+    track_list.append(seokey)
+    song_info = await gaanapy.get_track_info(track_list)
+    return song_info
 
-@app.route('/songs/search', methods=['GET'])
-def search_results():
+@app.get("/albums/search/")
+async def albums_search(query: str = Query(description="Name of the album to search for."),
+limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.search_albums(query, limit)
+    return result
 
-    query = request.args.get('query')
-    limit = request.args.get('limit')
+@app.get("/albums/info/")
+async def albums_info(seokey: str = Query(description="The `seokey` of the album. Example: `tyler-herro` in `https://gaana.com/album/tyler-herro`")) -> dict:
+    album_list = []
+    album_list.append(seokey)
+    album_info = await gaanapy.get_album_info(album_list, True)
+    return album_info
 
-    if query is None:
-         return jsonify(functions.noResults())
-    elif limit is None:
-         result = songs.searchSong(query, 10)
-    else:
-         result = songs.searchSong(query, limit)
+@app.get("/artists/search/")
+async def artists_search(query: str = Query(description="Name of the artist to search for."), limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.search_artists(query, limit)
+    return result
 
-    if result == []:
-     return jsonify(functions.noSearchResults())
+@app.get("/artists/info/")
+async def artists_info(seokey: str = Query(description="The `seokey` of the artist. Example, `ksi` in `https://gaana.com/artist/ksi`")) -> dict:
+    artist_list = []
+    artist_list.append(seokey)
+    artist_info = await gaanapy.get_artist_info(artist_list, True)
+    return artist_info
+
+@app.get("/trending")
+async def get_trending(language: str = Query(description="Available options: English, Hindi, Tamil, Punjabi etc."), limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.get_trending(language, limit)
+    return result
+
+@app.get("/newreleases")
+async def get_new_releases(language: str = Query(description="Available options: English, Hindi, Tamil, Punjabi etc."), limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.get_new_releases(language, limit)
+    return result
+
+@app.get("/charts")
+async def get_charts(limit: Optional[int] = None) -> dict:
+    if limit == None:
+        limit = 10
+    result = await gaanapy.get_charts(limit)
+    return result
+
+@app.get("/playlists/info/")
+async def playlists_info(seokey: str = Query(description="The `seokey` of the playlist. Example: `gaana-dj-hindi-top-50-1` in `https://gaana.com/playlist/gaana-dj-hindi-top-50-1`")) -> dict:
+    playlist_info = await gaanapy.get_playlist_info(seokey)
+    return playlist_info
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+            title="GaanaPy",
+            version='0.0',
+            description=" An Unofficial Gaana API Written in Python 3. https://github.com/ZingyTomato/GaanaPy",
+            routes=app.routes,
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
     
-    return jsonify(result)
-
-@app.route('/songs/info', methods=['GET'])
-def id_results():
-
-    query = request.args.get('seokey')
-
-    if query is None:
-         return jsonify(functions.noResultsId())
-
-    result = songs.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/songs/similar', methods=['GET'])
-def recommend_songs_results():
-
-    track_id = request.args.get('track_id')
-    limit = request.args.get('limit')
-
-    if track_id is None:
-         return jsonify(functions.noResultsRecommendationsSongs())
-    elif limit is None:
-         result = similar.createJsonSimilarSongs(track_id, 20)
-    else:
-         result = similar.createJsonSimilarSongs(track_id, limit)
-
-    if result == []:
-     return jsonify(functions.noSimilarResults())
-
-    return jsonify(result)
-
-@app.route('/albums/similar', methods=['GET'])
-def recommend_album_results():
-
-    album_id = request.args.get('album_id')
-    limit = request.args.get('limit')
-
-    if album_id is None:
-         return jsonify(functions.noResultsRecommendationsAlbums())
-    elif limit is None:
-         result = similar.createJsonSimilarAlbums(album_id, 10)
-    else:
-         result = similar.createJsonSimilarAlbums(album_id, limit)
-
-    if result == []:
-     return jsonify(functions.noSimilarResults())
-
-    return jsonify(result)
-
-@app.route('/artists/similar', methods=['GET'])
-def recommend_artists_results():
-
-    artist_id = request.args.get('artist_id')
-    limit = request.args.get('limit')
-
-    if artist_id is None:
-         return jsonify(functions.noResultsRecommendationsArtists())
-    elif limit is None:
-         result = similar.createJsonSimilarArtists(artist_id, 10)
-    else:
-         result = similar.createJsonSimilarArtists(artist_id, limit)
-
-    if result == []:
-     return jsonify(functions.noSimilarResults())
-
-    return jsonify(result)
-
-@app.route('/albums/search', methods=['GET'])
-def search_album_results():
-
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-
-    if query is None:
-         return jsonify(functions.noResultsAlbums())
-    elif limit is None:
-         result = albums.searchAlbum(query, 10)
-    else:
-         result = albums.searchAlbum(query, limit)
-
-    if result == []:
-     return jsonify(functions.noSearchResults())
-
-    return jsonify(result)
-
-@app.route('/artists/search', methods=['GET'])
-def search_artists_results():
-
-    query = request.args.get('query')
-    limit = request.args.get('limit')
-
-    if query is None:
-         return jsonify(functions.noResultsArtists())
-    elif limit is None:
-         result = artists.searchArtists(query, 10)
-    else:
-         result = artists.searchArtists(query, limit)
-
-    if result == []:
-     return jsonify(functions.noSearchResults())
-
-    return jsonify(result)
-
-@app.route('/albums/info', methods=['GET'])
-def id_albums_results():
-
-    query = request.args.get('seokey')
-
-    if query is None:
-         return jsonify(functions.noResultsAlbumId())
-
-    result = albums.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/artists/info', methods=['GET'])
-def id_artists_results():
-
-    query = request.args.get('seokey')
-
-    if query is None:
-         return jsonify(functions.noResultsArtistId())
-
-    result = artists.createJsonSeo(query)
-
-    return jsonify(result)
-
-@app.route('/trending', methods=['GET'])
-def trending_results():
-
-    lang = request.args.get('lang')
-    limit = request.args.get('limit')
-
-    if lang is None:
-         return jsonify(functions.noResultsTrending())
-    elif limit is None:
-         result = trending.getTrending(lang, 10)
-    else:
-         result = trending.getTrending(lang, limit)
-
-    if result == []:
-     return jsonify(functions.noTrending())
-
-    return jsonify(result)
-
-@app.route('/newreleases', methods=['GET'])
-def newreleases_results():
-
-    lang = request.args.get('lang')
-    limit = request.args.get('limit')
-  
-    if lang is None:
-         return jsonify(functions.noResultsNewReleases())
-    elif limit is None:
-         result = newreleases.getNewReleases(lang, 10)
-    else:
-         result = newreleases.getNewReleases(lang, limit)
-
-    if result == []:
-     return jsonify(functions.noNewReleases())
-
-    return jsonify(result)
-
-@app.route('/charts', methods=['GET'])
-def charts_results():
-
-    limit = request.args.get('limit')
-
-    if limit is None:
-         result = charts.getCharts(10)
-    else:
-         result = charts.getCharts(limit)
-
-    if result == []:
-     return jsonify(functions.noCharts())
-
-    return jsonify(result)
-
-@app.route('/playlists/info', methods=['GET'])
-def playlists_results():
-
-    seokey = request.args.get('seokey')
-
-    if seokey is None:
-         return jsonify(functions.noResultsPlaylistId())
-
-    result = playlists.getPlaylists(seokey)
-
-    return jsonify(result)
-
-if __name__ == "__main__":
-    app.debug = False
-    app.config['JSON_SORT_KEYS'] = False
-    app.run(host="0.0.0.0", port=5000, use_reloader=False, threaded=True)
+app.openapi = custom_openapi

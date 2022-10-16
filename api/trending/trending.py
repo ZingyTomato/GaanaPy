@@ -1,36 +1,18 @@
-import requests
-import json
-from api import functions, endpoints
-from api.songs import songs
-
-def getTrending(language, limit):
-
-  url = endpoints.trending_url
-
-  headers = {
-  'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0',
-  'Cookie': f'__ul={language};'
-  }
-
-  response = requests.request("POST", url, headers=headers).text.encode()
-  result = json.loads(response)
-
-  ids = []
-
-  final_json = []
-
-  try:
-    limit = int(limit)
-  except ValueError:
-    limit = 10
-
-  for i in range(0,int(limit)):
-    try:
-      ids.append(result['entities'][int(i)]['seokey'])
-    except (IndexError, TypeError, KeyError):
-      pass
-
-  if len(ids) == 0:
-    return functions.noSearchResults()
-
-  return songs.createJson(ids)
+class Trending():
+    async def get_trending(self, language: str, limit: int) -> dict:
+        aiohttp = self.aiohttp
+        endpoints = self.api_endpoints
+        errors = self.errors
+        headers = {'Cookie': f'__ul={language};'}
+        response = await aiohttp.post(endpoints.trending_url, headers=headers)
+        result = await response.json()
+        track_seokeys = []
+        for i in range(0,int(limit)):
+            try:
+                track_seokeys.append(result['entities'][int(i)]['seokey'])
+            except (IndexError, TypeError, KeyError):
+                pass
+        if len(track_seokeys) == 0:
+          return await errors.no_results()
+        track_data = await self.get_track_info(track_seokeys)
+        return track_data

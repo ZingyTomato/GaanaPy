@@ -29,7 +29,6 @@ Live API: https://api.nikomusic.tk
 - **Album Artwork**
 - **Direct m3u8 Stream URLS**
 - **Release Date**
-- **Similar Songs, Albums, Artists**
 - **Top Charts**
 - **Trending Tracks**
 - **New Releases**
@@ -75,6 +74,8 @@ Live API: https://api.nikomusic.tk
 ```
 
 ## 👨‍🔧 **Usage**
+
+**Live Docs:** https://api.nikomusic.tk/docs
 
 ##### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh
@@ -200,63 +201,6 @@ https://api.nikomusic.tk/charts
 
 **Example:** Create a GET request or navigate to `https://api.nikomusic.tk/charts` to get a JSON response of the top charts.
 
-----
-##### **Get Similar Songs**:
-```sh
-https://api.nikomusic.tk/songs/similar?track_id=<insert-track-id-here>&limit=<insert-limit-here, eg. 5>
-```
-
-**How do I find a songs's track_id?:**
-
-* Using [`Search For Songs`](#search-for-songs-requires-a-search-query-limit-is-optional) or [`Search For Albums`](#search-for-albums-requires-a-search-query-limit-is-optional), locate:
-```json
-[
-  {
-    "track_id": "45031433",
-  }
-]
- ```
-
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/songs/similar?track_id=45031433` to get a JSON response of similar songs in return.
-
-----
-##### **Get Similar Albums**:
-```sh
-https://api.nikomusic.tk/albums/similar?album_id=<insert-album-id-here>&limit=<insert-limit-here, eg. 5>
-```
-
-**How do I find an albums's track_id?:**
-
-* Using [`Search For Songs`](#search-for-songs-requires-a-search-query-limit-is-optional) or [`Search For Albums`](#search-for-albums-requires-a-search-query-limit-is-optional), locate:
-```json
-[
-  {
-    "album_id": "5764095",
-  }
-]
- ```
-
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/albums/similar?album_id=5764095` to get a JSON response of similar albums in return.
-
-----
-##### **Get Similar Artists**:
-```sh
-https://api.nikomusic.tk/artists/similar?artist_id=<insert-artist-id-here>&limit=<insert-limit-here, eg. 5>
-```
-
-**How do I find an artists's track_id?:**
-
-* Using [`Search For Songs`](#search-for-songs-requires-a-search-query-limit-is-optional) or [`Search For Albums`](#search-for-albums-requires-a-search-query-limit-is-optional), locate:
-```json
-[
-  {
-    "artist_ids": "817522",
-  }
-]
- ```
-
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/artists/similar?artist_id=5764095` to get a JSON response of similar artists in return.
-
 ## 💻 **Local Development**
 
 Clone the Repository
@@ -269,7 +213,7 @@ $ pip3 install -r requirements.txt
 ```
 Run the app using
 ```sh
-$ python3 app.py
+$ python3 -m uvicorn app:app --reload
 ```
 
 Navigate to: `http://127.0.0.1:5000` to get started.
@@ -286,11 +230,11 @@ services:
     image: zingytomato/gaanapy:latest
     container_name: gaanapy
     ports:
-      - 5000:5000 # External port can be changed 
+      - 8000:8000 # External port can be changed
     restart: unless-stopped
 ```
 
-Navigate to: `http://HOST_IP:5000` to get started.
+Navigate to: `http://HOST_IP:8000` to get started.
 
 ## 🏥 Contributing
 
