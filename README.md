@@ -216,7 +216,7 @@ Run the app using
 $ python3 -m uvicorn app:app --reload
 ```
 
-Navigate to: `http://127.0.0.1:5000` to get started.
+Navigate to: `http://127.0.0.1:8000` to get started.
 
 ## **🐳 Docker Deployment**
 
@@ -234,7 +234,7 @@ services:
     restart: unless-stopped
 ```
 
-Navigate to: `http://HOST_IP:8000` to get started.
+Navigate to: `http://SERVER_IP:8000` to get started.
 
 ## 🏥 Contributing
 
