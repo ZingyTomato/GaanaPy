@@ -23,19 +23,19 @@ class Functions():
             artists.append(i['name'])
         return ', '.join(artists)
 
-    async def findArtistSeoKeys(self, results: str) -> str:
+    async def findArtistSeoKeys(self, results: list) -> str:
         seokeys = []
         for i in results:
             seokeys.append(i['seokey'])
         return ', '.join(seokeys)
 
-    async def findArtistIds(self, results: str) -> str:
+    async def findArtistIds(self, results: list) -> str:
         ids = []
         for i in results:
             ids.append(i['artist_id'])
         return ', '.join(ids)
 
-    async def findGenres(self, results: str) -> str:  
+    async def findGenres(self, results: list) -> str:  
         genres = []
         for i in results:
             try:

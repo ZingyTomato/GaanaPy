@@ -28,7 +28,7 @@ class Songs():
           track_info.extend(await asyncio.gather(*[self.format_json_songs(i) for i in result['tracks']]))
         return track_info
 
-    async def format_json_songs(self, results: list) -> dict:
+    async def format_json_songs(self, results: dict) -> dict:
         functions = self.functions
         errors = self.errors
         data = {}

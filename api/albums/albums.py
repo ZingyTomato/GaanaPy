@@ -41,7 +41,7 @@ class Albums():
         result = await self.get_track_info(track_seokeys)
         return result
 
-    async def format_json_albums(self, results: list) -> dict:
+    async def format_json_albums(self, results: dict) -> dict:
         functions = self.functions
         errors = self.errors
         data = {}

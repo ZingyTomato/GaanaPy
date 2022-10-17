@@ -11,7 +11,7 @@ class Charts():
         chart_info.extend(await asyncio.gather(*[self.format_json_charts(result['entities'][int(i)]) for i in range(0, int(limit))]))
         return chart_info
 
-    async def format_json_charts(self, results: list) -> dict:
+    async def format_json_charts(self, results: dict) -> dict:
         data = {}
         data['seokey'] = results['seokey']
         data['playlist_id'] = results['entity_id']
