@@ -4,7 +4,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ![image](https://user-images.githubusercontent.com/79736973/175231809-f79f07f7-7439-4ebe-a515-1448d0605b28.png)
 
-Live API: https://api.nikomusic.tk
+Live API: https://gaana.boundary.ml
 
 # 📖 Table Of Contents
 
@@ -75,32 +75,32 @@ Live API: https://api.nikomusic.tk
 
 ## 👨‍🔧 **Usage**
 
-**Live Docs:** https://api.nikomusic.tk/docs
+**Live Docs:** https://gaana.boundary.ml/docs
 
 ##### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh
-https://api.nikomusic.tk/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+https://gaana.boundary.ml/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/songs/search?query=tyler herro` to get a JSON response of song results in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/songs/search?query=tyler herro` to get a JSON response of song results in return.
 
 ---
 ##### **Search For Albums**: (Requires a search query, limit is optional)
 ```sh
-https://api.nikomusic.tk/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+https://gaana.boundary.ml/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/albums/search?query=all over the place` to get a JSON response of album results in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/albums/search?query=all over the place` to get a JSON response of album results in return.
 
 ----
 ##### **Search For Artists**: (Requires a search query, limit is optional)
 ```sh
-https://api.nikomusic.tk/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+https://gaana.boundary.ml/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/artists/search?query=KSI` to get a JSON response of arist results in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/artists/search?query=KSI` to get a JSON response of arist results in return.
 
 ----
 ##### **Get Song Info**: (Requires a SEOKEY)
 ```sh
-https://api.nikomusic.tk/songs/info?seokey=SEOKEY
+https://gaana.boundary.ml/songs/info?seokey=SEOKEY
 ```
 **How do I find a song's seokey?:**
 
@@ -114,12 +114,12 @@ https://api.nikomusic.tk/songs/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Album Info**: (Requires a SEOKEY)
 ```sh
-https://api.nikomusic.tk/albums/info?seokey=ALBUM_SEOKEY
+https://gaana.boundary.ml/albums/info?seokey=ALBUM_SEOKEY
 ```
 **How do I find an albums's seokey?:**
 
@@ -141,12 +141,12 @@ https://api.nikomusic.tk/albums/info?seokey=ALBUM_SEOKEY
 ]
 ```
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Artist Info**: (Requires a SEOKEY)
 ```sh
-https://api.nikomusic.tk/artists/info?seokey=SEOKEY
+https://gaana.boundary.ml/artists/info?seokey=SEOKEY
 ```
 **How do I find an artists's seokey?:**
 
@@ -160,46 +160,46 @@ https://api.nikomusic.tk/artists/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
 
 ----
 ##### **Get Playlist Info**: (Requires a SEOKEY)
 
 ```sh
-https://api.nikomusic.tk/playlists/info?seokey=SEOKEY
+https://gaana.boundary.ml/playlists/info?seokey=SEOKEY
 ```
 **How do I find a playlists's seokey?:**
 
 * In a URL, for example, `https://gaana.com/playlist/gaana-dj-gaana-international-top-50`, `gaana-dj-gaana-international-top-50` is the playlists's seokey. 
 
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
 
 ----
 ##### **Get Trending Tracks**: (Requires a LANGUAGE)
 ```sh
-https://api.nikomusic.tk/trending?lang=LANGUAGE
+https://gaana.boundary.ml/trending?lang=LANGUAGE
 ```
 **Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/trending?lang=English` to get a JSON response of the trending English songs in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/trending?lang=English` to get a JSON response of the trending English songs in return.
 
 ----
 ##### **Get New Releases**: (Requires a LANGUAGE)
 ```sh
-https://api.nikomusic.tk/newreleases?lang=LANGUAGE
+https://gaana.boundary.ml/newreleases?lang=LANGUAGE
 ```
 **Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
 
 ----
 ##### **Get Charts**:
 ```sh
-https://api.nikomusic.tk/charts
+https://gaana.boundary.ml/charts
 ```
 
-**Example:** Create a GET request or navigate to `https://api.nikomusic.tk/charts` to get a JSON response of the top charts.
+**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/charts` to get a JSON response of the top charts.
 
 ## 💻 **Local Development**
 
