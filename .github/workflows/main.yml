@@ -1,27 +1,67 @@
-name: Build GaanaPy Docker Image
+# This is a basic workflow to help you get started with Actions
+
+name: Build GaanaPy Image
+
+# Controls when the workflow will run
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'latest'
+  pull_request:
+    branches:
+      - 'main'
 
+permissions: 
+  contents: read
+  packages: write
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  build-nikomusic:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: docker login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-        run: |
-          echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
-      - name: Build Image
-        run: |
-         docker build . -t zingytomato/gaanapy:latest 
-      - name: Push to Docker Hub
-        run: |
-          docker push zingytomato/gaanapy:latest 
-          docker logout
+      # Get the repositery's code
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+      - name: Docker meta
+        id: meta_gaanapy
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            docker.io/zingytomato/gaanapy
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64, linux/arm/v7
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta_gaanapy.outputs.tags }}
+          labels: ${{ steps.meta_gaanapy.outputs.labels }}
+### FROM https://dev.to/cloudx/multi-arch-docker-images-the-easy-way-with-github-actions-4k54
