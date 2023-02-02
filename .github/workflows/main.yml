@@ -10,9 +10,6 @@ on:
       - 'main'
     tags:
       - 'latest'
-  pull_request:
-    branches:
-      - 'main'
 
 permissions: 
   contents: read
