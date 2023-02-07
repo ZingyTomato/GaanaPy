@@ -227,7 +227,7 @@ Deploy the API locally using the following Docker-Compose stack:
 version: "2.1"
 services:
   gaanapy:
-    image: zingytomato/gaanapy:latest
+    image: zingytomato/gaanapy:main
     container_name: gaanapy
     ports:
       - 8000:8000 # External port can be changed
