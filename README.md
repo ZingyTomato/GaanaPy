@@ -4,8 +4,6 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ![image](https://user-images.githubusercontent.com/79736973/175231809-f79f07f7-7439-4ebe-a515-1448d0605b28.png)
 
-Live API: https://gaana.boundary.ml
-
 # 📖 Table Of Contents
 
 * [`🎧 Features`](#-features)
@@ -27,7 +25,7 @@ Live API: https://gaana.boundary.ml
 - **Album Name**
 - **Album URL**
 - **Album Artwork**
-- **Direct m3u8 Stream URLS**
+- **Direct m3u8 Stream URLS (Needs to be played using VLC or MPV)**
 - **Release Date**
 - **Top Charts**
 - **Trending Tracks**
@@ -75,32 +73,32 @@ Live API: https://gaana.boundary.ml
 
 ## 👨‍🔧 **Usage**
 
-**Live Docs:** https://gaana.boundary.ml/docs
+**Docs:** http://127.0.0.1:8000/docs (if hosted on the same machine, change ip as appropriate)
 
 ##### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh
-https://gaana.boundary.ml/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+http://127.0.0.1:8000/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/songs/search?query=tyler herro` to get a JSON response of song results in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/songs/search?query=tyler herro` to get a JSON response of song results in return.
 
 ---
 ##### **Search For Albums**: (Requires a search query, limit is optional)
 ```sh
-https://gaana.boundary.ml/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+http://127.0.0.1:8000/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/albums/search?query=all over the place` to get a JSON response of album results in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/albums/search?query=all over the place` to get a JSON response of album results in return.
 
 ----
 ##### **Search For Artists**: (Requires a search query, limit is optional)
 ```sh
-https://gaana.boundary.ml/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
+http://127.0.0.1:8000/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/artists/search?query=KSI` to get a JSON response of arist results in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/search?query=KSI` to get a JSON response of arist results in return.
 
 ----
 ##### **Get Song Info**: (Requires a SEOKEY)
 ```sh
-https://gaana.boundary.ml/songs/info?seokey=SEOKEY
+http://127.0.0.1:8000/songs/info?seokey=SEOKEY
 ```
 **How do I find a song's seokey?:**
 
@@ -114,12 +112,12 @@ https://gaana.boundary.ml/songs/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Album Info**: (Requires a SEOKEY)
 ```sh
-https://gaana.boundary.ml/albums/info?seokey=ALBUM_SEOKEY
+http://127.0.0.1:8000/albums/info?seokey=ALBUM_SEOKEY
 ```
 **How do I find an albums's seokey?:**
 
@@ -141,12 +139,12 @@ https://gaana.boundary.ml/albums/info?seokey=ALBUM_SEOKEY
 ]
 ```
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
 ##### **Get Artist Info**: (Requires a SEOKEY)
 ```sh
-https://gaana.boundary.ml/artists/info?seokey=SEOKEY
+http://127.0.0.1:8000/artists/info?seokey=SEOKEY
 ```
 **How do I find an artists's seokey?:**
 
@@ -160,46 +158,46 @@ https://gaana.boundary.ml/artists/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
 
 ----
 ##### **Get Playlist Info**: (Requires a SEOKEY)
 
 ```sh
-https://gaana.boundary.ml/playlists/info?seokey=SEOKEY
+http://127.0.0.1:8000/playlists/info?seokey=SEOKEY
 ```
 **How do I find a playlists's seokey?:**
 
 * In a URL, for example, `https://gaana.com/playlist/gaana-dj-gaana-international-top-50`, `gaana-dj-gaana-international-top-50` is the playlists's seokey. 
 
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
 
 ----
 ##### **Get Trending Tracks**: (Requires a LANGUAGE)
 ```sh
-https://gaana.boundary.ml/trending?lang=LANGUAGE
+http://127.0.0.1:8000/trending?lang=LANGUAGE
 ```
 **Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/trending?lang=English` to get a JSON response of the trending English songs in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/trending?lang=English` to get a JSON response of the trending English songs in return.
 
 ----
 ##### **Get New Releases**: (Requires a LANGUAGE)
 ```sh
-https://gaana.boundary.ml/newreleases?lang=LANGUAGE
+http://127.0.0.1:8000/newreleases?lang=LANGUAGE
 ```
 **Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
 
 ----
-##### **Get Charts**:
+##### **Get Charts** (Returns a list of playlists current on Gaana):
 ```sh
-https://gaana.boundary.ml/charts
+http://127.0.0.1:8000/charts
 ```
 
-**Example:** Create a GET request or navigate to `https://gaana.boundary.ml/charts` to get a JSON response of the top charts.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/charts` to get a JSON response of the top charts.
 
 ## 💻 **Local Development**
 
