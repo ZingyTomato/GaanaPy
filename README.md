@@ -62,7 +62,8 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
     }, 
     "stream_urls": {
       "urls": {
-        "high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_96.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec", 
+        "very_high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_320.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec",
+        "high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_128.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec", 
         "medium_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_64.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6", 
         "low_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_16.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6"
       }
