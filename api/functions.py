@@ -10,8 +10,6 @@ class Functions():
         KEY = 'g@1n!(f1#r.0$)&%'.encode('utf-8')
         aes = AES.new(KEY, AES.MODE_CBC, IV)
         stream_url = await self.unpad((aes.decrypt(base64.b64decode(link))).decode('utf-8'))
-        if "https://vodhlsgaana.akamaized.net" in stream_url:
-            stream_url = stream_url.replace("96.mp4.master", "320.mp4.master")
         return stream_url
 
     async def unpad(self, s: str) -> str: 

@@ -73,7 +73,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ## 👨‍🔧 **Usage**
 
-**Docs:** http://127.0.0.1:8000/docs (if hosted on the same machine, change ip as appropriate)
+**Docs:** http://127.0.0.1:8000/docs (if hosted on the same machine, change the host IP as appropriate)
 
 ##### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh

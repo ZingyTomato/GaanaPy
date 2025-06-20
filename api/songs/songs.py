@@ -61,10 +61,10 @@ class Songs():
         data['images']['urls']['medium_artwork'] = (results['artwork_web'])
         data['images']['urls']['small_artwork'] = (results['artwork'])
         data['stream_urls'] = {'urls': {}}
-        try:
-          data['stream_urls']['urls']['high_quality'] = (await functions.decryptLink(results['urls']['high']['message']))
-        except KeyError:
-          data['stream_urls']['urls']['high_quality'] = ""
-        data['stream_urls']['urls']['medium_quality'] = (await functions.decryptLink(results['urls']['medium']['message']))
-        data['stream_urls']['urls']['low_quality'] = (await functions.decryptLink(results['urls']['medium']['message'])).replace("64.mp4", "16.mp4")
+        base_url = await functions.decryptLink(results['urls']['medium']['message'])
+        
+        data['stream_urls']['urls']['very_high_quality'] = base_url.replace("64.mp4", "320.mp4")
+        data['stream_urls']['urls']['high_quality'] = base_url.replace("64.mp4", "128.mp4")
+        data['stream_urls']['urls']['medium_quality'] = base_url
+        data['stream_urls']['urls']['low_quality'] = base_url.replace("64.mp4", "16.mp4")
         return data
