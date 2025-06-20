@@ -62,10 +62,10 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
     }, 
     "stream_urls": {
       "urls": {
-        "very_high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_320.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec",
-        "high_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_128.mp4.xvod/master.m3u8?sign=1656756551-MgfKD3auc3-0-b9f21d9ef627d1ec51c6d816268cc0ec", 
-        "medium_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_64.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6", 
-        "low_quality": "https://stream-cdn.gaana.com/songs/3/3487503/32408795/32408795_16.mp4.xvod/master.m3u8?sign=1656756551-I1k1azFNJw-0-b111804c7ef97b484680be1d892d36d6"
+        "very_high_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/320.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f",
+        "high_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/128.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f", 
+        "medium_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/64.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f", 
+        "low_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/16.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f"
       }
     }
   }
