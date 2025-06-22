@@ -1,4 +1,4 @@
-class Playlists():
+class Playlists:
     async def get_playlist_info(self, playlist_id: str) -> dict:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints

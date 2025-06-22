@@ -1,6 +1,6 @@
 import asyncio
 
-class Albums():
+class Albums:
     async def search_albums(self, search_query: str, limit: int) -> list:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints

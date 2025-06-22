@@ -1,6 +1,6 @@
 import asyncio
 
-class Artists():
+class Artists:
     async def search_artists(self, search_query: str, limit: int) -> list:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints
@@ -40,6 +40,15 @@ class Artists():
             track_seokeys.append(track['seokey'])
         track_data = await self.get_track_info(track_seokeys)
         return track_data
+    
+    async def get_similar_artists(self, artist_id: str, limit: int) -> dict:
+        aiohttp = self.aiohttp
+        endpoints = self.api_endpoints
+        response = await aiohttp.get(endpoints.similar_artists_url + artist_id)
+        result = await response.json()
+        similar_artists = []
+        similar_artists.extend(await asyncio.gather(*[self.format_json_similar_artists(result['entities'][i]) for i in range(int(limit))]))
+        return similar_artists
 
     async def format_json_artists(self, results: dict) -> dict:
         functions = self.functions
@@ -62,4 +71,24 @@ class Artists():
         if self.info == True:
             data['top_tracks'] = await self.get_top_tracks(data['artist_id'])
         self.info = False
+        return data
+    
+    async def format_json_similar_artists(self, results: dict) -> dict:
+        functions = self.functions
+        errors = self.errors
+        data = {}
+        try:
+            data['seokey'] = results['seokey']
+        except (IndexError, TypeError, KeyError):
+            return await errors.invalid_seokey()
+        data['artist_id'] = results['entity_id']
+        data['name'] = results['name']
+        data['song_count'] = results['entity_info'][1]['value']
+        data['album_count'] = results['entity_info'][0]['value']
+        data['favorite_count'] = results['favorite_count']
+        data['artist_url'] = f"https://gaana.com/artist/{data['seokey']}"
+        data['images'] = {'urls': {}}
+        data['images']['urls']['large_artwork'] = (results['atw']).replace("size_m", "size_l")
+        data['images']['urls']['medium_artwork'] = (results['atw']).replace("size_m", "size_m")
+        data['images']['urls']['small_artwork'] = (results['atw']).replace("size_m", "size_s")
         return data

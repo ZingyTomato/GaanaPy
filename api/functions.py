@@ -2,7 +2,7 @@ import asyncio
 from Crypto.Cipher import AES
 import base64
 
-class Functions():
+class Functions:
     
     ### From https://github.com/cyberboysumanjay/GaanaAPI/blob/0488e812a9ac7d740d785c6e09f1e83e527eebcc/gaana.py#L57
     async def decryptLink(self, link: str) -> str:

@@ -1,4 +1,4 @@
-class NewReleases():
+class NewReleases:
     async def get_new_releases(self, language: str, limit: int) -> dict:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints

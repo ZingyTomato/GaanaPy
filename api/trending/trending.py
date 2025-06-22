@@ -1,4 +1,4 @@
-class Trending():
+class Trending:
     async def get_trending(self, language: str, limit: int) -> dict:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints

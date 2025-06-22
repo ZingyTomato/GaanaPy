@@ -1,4 +1,4 @@
-class Errors():
+class Errors:
     async def invalid_seokey(self) -> dict:
         return {"ERROR": "Invalid Seokey!"}
     async def no_results(self) -> dict:
