@@ -41,3 +41,9 @@ class Functions:
             except ValueError:
                 return ""
         return ', '.join(genres)
+
+    async def isExplicit(self, explicit: list) -> bool: 
+        if explicit == 1:
+            return True
+        else:
+            return False 

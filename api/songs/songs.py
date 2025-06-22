@@ -48,7 +48,7 @@ class Songs:
         data['duration'] = results['duration']
         data['popularity'] = results['popularity']
         data['genres'] = await functions.findGenres(results['gener'])
-        data['is_explicit'] = results['parental_warning']
+        data['is_explicit'] = await functions.isExplicit(results['parental_warning'])
         data['language'] = results['language']
         data['label'] = results['vendor_name']
         data['release_date'] = results['release_date']

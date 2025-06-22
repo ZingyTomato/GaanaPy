@@ -2,8 +2,6 @@
 
 GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Music Streaming Service.
 
-![image](https://user-images.githubusercontent.com/79736973/175231809-f79f07f7-7439-4ebe-a515-1448d0605b28.png)
-
 # 📖 Table Of Contents
 
 * [`🎧 Features`](#-features)
@@ -45,7 +43,7 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
     "album": "Tyler Herro", 
     "duration": "02:36", 
     "genres": "Hip Hop", 
-    "is_explicit": 1, 
+    "is_explicit": true, 
     "language": "English", 
     "label": "Generation Now/Atlantic", 
     "release_date": "2020-10-22", 
@@ -95,6 +93,24 @@ http://127.0.0.1:8000/albums/search?query=<insert-query-here>&limit=<insert-limi
 http://127.0.0.1:8000/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/search?query=KSI` to get a JSON response of arist results in return.
+
+----
+##### **Get Similar Artists**: (Requires an Artist ID)
+```sh
+http://127.0.0.1:8000/artists/similar?artist_id=ARTIST_ID
+```
+**How do I find an artist's ID?:**
+
+* Using [`Search For Songs`](#search-for-songs-requires-a-search-query-limit-is-optional) or [`Search For Albums`](#search-for-albums-requires-a-search-query-limit-is-optional), locate:
+```json
+[
+  {
+    "artist_ids": "817522", (There may be more than 1 artist ID depending on the number of artists in the song/album.) 
+  }
+]
+ ```
+
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/similar?artist_id=817522` to get a JSON response of similar artists in return.
 
 ----
 ##### **Get Song Info**: (Requires a SEOKEY)
@@ -154,7 +170,7 @@ http://127.0.0.1:8000/artists/info?seokey=SEOKEY
 ```json 
 [
   {
-    "artist_seokeys": "jack-harlow", (There may be more than 1 seokey depending on the number of artists in the song.) 
+    "artist_seokeys": "jack-harlow", (There may be more than 1 seokey depending on the number of artists in the song/album.) 
   }
 ]
  ```
@@ -223,7 +239,6 @@ Deploy the API locally using the following Docker-Compose stack:
 
 ```
 ---
-version: "2.1"
 services:
   gaanapy:
     image: zingytomato/gaanapy:main

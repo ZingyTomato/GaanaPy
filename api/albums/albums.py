@@ -60,7 +60,7 @@ class Albums:
             data['artist_seokeys'] = ""
             data['artist_ids'] = ""
         data['duration'] = results['album']['duration']
-        data['is_explicit'] = results['album']['parental_warning']
+        data['is_explicit'] = await functions.isExplicit(results['album']['parental_warning'])
         data['language'] = results['album']['language']
         data['label'] = results['album']['recordlevel']
         data['track_count'] = results['album']['trackcount']

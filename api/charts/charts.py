@@ -12,13 +12,14 @@ class Charts:
         return chart_info
 
     async def format_json_charts(self, results: dict) -> dict:
+        functions = self.functions
         data = {}
         data['seokey'] = results['seokey']
         data['playlist_id'] = results['entity_id']
         data['title'] = results['name']
         data['language'] = results['language']
         data['favorite_count'] = results['favorite_count']
-        data['is_explicit'] = results['entity_info'][6]['value']
+        data['is_explicit'] = await functions.isExplicit(results['entity_info'][6]['value'])
         data['play_count'] = results['entity_info'][-1]['value']
         data['playlist_url'] = f"https://gaana.com/playlist/{data['seokey']}"
         data['images'] = {'urls': {}}
