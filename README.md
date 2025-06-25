@@ -1,8 +1,8 @@
 # 🎶 GaanaPy
 
-GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Music Streaming Service.
+GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian music streaming service.
 
-# 📖 Table Of Contents
+## 📖 Table Of Contents
 
 * [`🎧 Features`](#-features)
 * [`👨‍🔧 Usage`](#-usage)
@@ -12,58 +12,54 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ## 🎧 **Features**
 
-##### The API can get the following details for a specific track in JSON format (Other Options Include: Albums, Artists, Trending, New Releases and Playlists):
-- **Track Name**
-- **Track Duration**
-- **Track Artwork**
-- **Track URL**
-- **Track Language**
-- **Artist Name**
-- **Artist Artwork**
-- **Album Name**
-- **Album URL**
-- **Album Artwork**
-- **Direct m3u8 Stream URLS (Needs to be played using VLC or MPV)**
-- **Release Date**
-- **Top Charts**
-- **Trending Tracks**
-- **New Releases**
-- .... and a lot more!
+The API provides structured JSON responses for:
 
+- **Tracks** – Search and retrieve details for specific tracks.
+- **Albums** – Search and fetch album information.
+- **Artists** – Search, view artist details, and find similar artists.
+- **Playlists** – Retrieve playlist details (search not supported).
+- **Top Charts** – Curated playlists across all languages.
+- **Trending Tracks** – Per-language trends.
+- **New Releases** – Latest music by language.
+
+### Example Track Response
 ```json
 [
   {
-    "seokey": "tyler-herro", 
-    "album_seokey": "tyler-herro", 
-    "track_id": "32408795", 
-    "title": "Tyler Herro", 
-    "artists": "Jack Harlow", 
-    "artist_seokeys": "jack-harlow", 
-    "artist_image": "https://a10.gaanacdn.com/gn_img/artists/XYybzrb2gz/Yybzn4Bgb2/size_m_1607927137.webp", 
-    "album": "Tyler Herro", 
-    "duration": "02:36", 
-    "genres": "Hip Hop", 
-    "is_explicit": true, 
-    "language": "English", 
-    "label": "Generation Now/Atlantic", 
-    "release_date": "2020-10-22", 
-    "play_count": "<100K", 
-    "favorite_count": 202, 
-    "song_url": "https://gaana.com/song/tyler-herro", 
-    "album_url": "https://gaana.com/album/tyler-herro", 
+    "seokey": "tyler-herro",
+    "album_seokey": "tyler-herro",
+    "track_id": "32408795",
+    "title": "Tyler Herro",
+    "artists": "Jack Harlow",
+    "artist_seokeys": "jack-harlow",
+    "artist_ids": "817522",
+    "artist_image": "https://a10.gaanacdn.com/gn_img/artists/XYybzrb2gz/Yybzn4Bgb2/size_m_1607927137.webp",
+    "album": "Tyler Herro",
+    "album_id": "3487503",
+    "duration": "156",
+    "popularity": "18444~18444",
+    "genres": "Hip Hop",
+    "is_explicit": true,
+    "language": "English",
+    "label": "Generation Now/Atlantic",
+    "release_date": "2020-10-22",
+    "play_count": "<100K",
+    "favorite_count": 231,
+    "song_url": "https://gaana.com/song/tyler-herro",
+    "album_url": "https://gaana.com/album/tyler-herro",
     "images": {
       "urls": {
-        "large_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_l.jpg", 
-        "medium_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_m.jpg", 
+        "large_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_l.jpg",
+        "medium_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_m.jpg",
         "small_artwork": "https://a10.gaanacdn.com/gn_img/albums/4Z9bqo3yQn/Z9bq2AG1Ky/size_s.jpg"
       }
-    }, 
+    },
     "stream_urls": {
       "urls": {
-        "very_high_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/320.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f",
-        "high_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/128.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f", 
-        "medium_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/64.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f", 
-        "low_quality": "https://vodhlsgaana.akamaized.net/hls/64/68964/676857/16.mp4.master.m3u8?hdnts=st=1750436901~exp=1750451301~acl=/*~hmac=e4a2f5775323830f9883bba6460970f59256f6fa1f31b9a4bfb4559deeee525f"
+        "very_high_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/320.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "high_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/128.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "medium_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/64.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "low_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/16.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb"
       }
     }
   }
@@ -72,30 +68,31 @@ GaanaPy is an unofficial JSON API for [`Gaana`](https://gaana.com), an Indian Mu
 
 ## 👨‍🔧 **Usage**
 
-**Docs:** http://127.0.0.1:8000/docs (if hosted on the same machine, change the host IP as appropriate)
+API documentation (when running locally):
+http://127.0.0.1:8000/docs
 
-##### **Search For Songs**: (Requires a search query, limit is optional)
+#### **Search For Songs**: (Requires a search query, limit is optional)
 ```sh
 http://127.0.0.1:8000/songs/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/songs/search?query=tyler herro` to get a JSON response of song results in return.
 
 ---
-##### **Search For Albums**: (Requires a search query, limit is optional)
+#### **Search For Albums**: (Requires a search query, limit is optional)
 ```sh
 http://127.0.0.1:8000/albums/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/albums/search?query=all over the place` to get a JSON response of album results in return.
 
 ----
-##### **Search For Artists**: (Requires a search query, limit is optional)
+#### **Search For Artists**: (Requires a search query, limit is optional)
 ```sh
 http://127.0.0.1:8000/artists/search?query=<insert-query-here>&limit=<insert-limit-here, eg. 5>
 ```
-**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/search?query=KSI` to get a JSON response of arist results in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/search?query=KSI` to get a JSON response of artist results in return.
 
 ----
-##### **Get Similar Artists**: (Requires an Artist ID)
+#### **Get Similar Artists**: (Requires an Artist ID)
 ```sh
 http://127.0.0.1:8000/artists/similar?artist_id=ARTIST_ID
 ```
@@ -113,7 +110,7 @@ http://127.0.0.1:8000/artists/similar?artist_id=ARTIST_ID
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/similar?artist_id=817522` to get a JSON response of similar artists in return.
 
 ----
-##### **Get Song Info**: (Requires a SEOKEY)
+#### **Get Song Info**: (Requires a SEOKEY)
 ```sh
 http://127.0.0.1:8000/songs/info?seokey=SEOKEY
 ```
@@ -132,7 +129,7 @@ http://127.0.0.1:8000/songs/info?seokey=SEOKEY
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/songs/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
 
 ----
-##### **Get Album Info**: (Requires a SEOKEY)
+#### **Get Album Info**: (Requires a SEOKEY)
 ```sh
 http://127.0.0.1:8000/albums/info?seokey=ALBUM_SEOKEY
 ```
@@ -156,14 +153,14 @@ http://127.0.0.1:8000/albums/info?seokey=ALBUM_SEOKEY
 ]
 ```
 
-**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/albums/info?seokey=tyler-herro` to get a JSON response of the song's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/albums/info?seokey=tyler-herro` to get a JSON response of the album's info in return.
 
 ----
-##### **Get Artist Info**: (Requires a SEOKEY)
+#### **Get Artist Info**: (Requires a SEOKEY)
 ```sh
 http://127.0.0.1:8000/artists/info?seokey=SEOKEY
 ```
-**How do I find an artists's seokey?:**
+**How do I find an artist's seokey?:**
 
 * In a URL, for example, `https://gaana.com/artist/jack-harlow`, `jack-harlow` is the song's seokey.  
 * Using [`Search For Songs`](#search-for-songs-requires-a-search-query-limit-is-optional) or [`Search For Albums`](#search-for-albums-requires-a-search-query-limit-is-optional), locate:
@@ -175,41 +172,41 @@ http://127.0.0.1:8000/artists/info?seokey=SEOKEY
 ]
  ```
 
-**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/info?seokey=jack-harlow` to get a JSON response of the artists's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/artists/info?seokey=jack-harlow` to get a JSON response of the artist's info in return.
 
 ----
-##### **Get Playlist Info**: (Requires a SEOKEY)
+#### **Get Playlist Info**: (Requires a SEOKEY)
 
 ```sh
 http://127.0.0.1:8000/playlists/info?seokey=SEOKEY
 ```
 **How do I find a playlists's seokey?:**
 
-* In a URL, for example, `https://gaana.com/playlist/gaana-dj-gaana-international-top-50`, `gaana-dj-gaana-international-top-50` is the playlists's seokey. 
+* In a URL, for example, `https://gaana.com/playlist/gaana-dj-gaana-international-top-50`, `gaana-dj-gaana-international-top-50` is the playlist's seokey. 
 
 
-**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlists's info in return.
+**Example:** Create a GET request or navigate to `http://127.0.0.1:8000/playlists/info?seokey=gaana-dj-gaana-international-top-50` to get a JSON response of the playlist's info in return.
 
 ----
-##### **Get Trending Tracks**: (Requires a LANGUAGE)
+#### **Get Trending Tracks**: (Requires a LANGUAGE)
 ```sh
 http://127.0.0.1:8000/trending?lang=LANGUAGE
 ```
-**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
+**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/trending?lang=English` to get a JSON response of the trending English songs in return.
 
 ----
-##### **Get New Releases**: (Requires a LANGUAGE)
+#### **Get New Releases**: (Requires a language)
 ```sh
 http://127.0.0.1:8000/newreleases?lang=LANGUAGE
 ```
-**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case Sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
+**Language Options:** English, Hindi, Punjabi, Telugu, Tamil etc. (Warning: Case sensitive!). Defaults to Hindi if no language is provided or if an invalid language is entered.
 
 **Example:** Create a GET request or navigate to `http://127.0.0.1:8000/newreleases?lang=English` to get a JSON response of both new English songs and English albums in return.
 
 ----
-##### **Get Charts** (Returns a list of playlists current on Gaana):
+#### **Get Charts** (Returns a list of popular playlists):
 ```sh
 http://127.0.0.1:8000/charts
 ```
