@@ -42,7 +42,7 @@ class Functions:
                 return ""
         return ', '.join(genres)
 
-    async def isExplicit(self, explicit: list) -> bool: 
+    async def isExplicit(self, explicit: int) -> bool: 
         if explicit == 1:
             return True
         else:
