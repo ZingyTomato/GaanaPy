@@ -1,6 +1,7 @@
 import asyncio
 from Crypto.Cipher import AES
 import base64
+import binascii
 
 class Functions:
     
@@ -9,7 +10,23 @@ class Functions:
         IV = 'asd!@#!@#@!12312'.encode('utf-8')
         KEY = 'g@1n!(f1#r.0$)&%'.encode('utf-8')
         aes = AES.new(KEY, AES.MODE_CBC, IV)
-        stream_url = await self.unpad((aes.decrypt(base64.b64decode(link))).decode('utf-8'))
+        try:
+            if not link:
+                return ""
+            if isinstance(link, bytes):
+                raw_link = link.decode('utf-8', errors='ignore')
+            else:
+                raw_link = str(link)
+            normalized = raw_link.strip().replace("\n", "").replace("\r", "").replace(" ", "")
+            padding = '=' * (-len(normalized) % 4)
+            try:
+                decoded = base64.b64decode(normalized + padding)
+            except (binascii.Error, ValueError):
+                decoded = base64.urlsafe_b64decode(normalized + padding)
+            decrypted = aes.decrypt(decoded).decode('utf-8')
+            stream_url = await self.unpad(decrypted)
+        except (binascii.Error, UnicodeDecodeError, ValueError, TypeError, IndexError):
+            return ""
         return stream_url
 
     async def unpad(self, s: str) -> str: 
