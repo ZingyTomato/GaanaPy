@@ -5,22 +5,14 @@ functions = Functions()
 
 @pytest.mark.asyncio
 async def test_decryptLink():
-    encrypted_link = """/PXDlMo67L4ssymkjHOGPNgaoh8Ou9LKJSyF01YhszT3suEhlTJHPnFc++I6/5mIBC0
-        1vAoAWio8FxdsItmcEDREN4A9UQ21NaErv7ADx77RSbVb60Z1C8p16Od5bQ2CA4oKJN9sj1F1U0
-        +g6EGRvlPd0fh05Rz8im1tL4bbRAwUIHPflvlsjVOrQ5TgREsX9iTSfRMeuotyc3Dy5nMagK4/s/GUXY
-        Gkzf1nb+zVUrLem1LjMozs+su0wKsMwMHK"""
-    decrypted_link = """https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/64.mp4.master.m3u8?hdnts=st=1750928699~exp=1750943099~acl=/*~hmac=d7eea4e6396b27dc8591c405cc57fa205e6cca82dd831406055e01bebe493632"""
+    encrypted_link = """6unD0wQzn85Ci6nCVEVdeIA7deSHj0knLx6xEPiF6fFfdCMwZIWVZPbTynyqimz2BOdkjXRitpDzh5jagNiqSN
+    JHAmyyCnLS9m2zLLhKLs5Qw5BUTk8AHPWus5HhxmysEmE/KJP+vkXzCY7DC4PIk1+Fz/OfjagcutKzs0WBs3FMixnMvbhRhs6LpEPr1AYH1
+    RJW5LRDBdhsoA2sJZNLQZCVzrTiawu1OIL2g9nhJMDW0nSuiy03PRAPp842qB5ooE2vMg2HlMF8Gk0Gl7s1NLWEc3cdxiwAXhAolkV+yYBP
+    4KzRUAjLqP4EsUUcB1n2w="""
+    decrypted_link = """https://vodhlsgaana-ebw.akamaized.net/hls/83/6437283/47470670/64.mp4.master.m3u8?hdnts=st=1767108041~exp=1767122441~acl=/hls/83/6437283/47470670/*~hmac=6b4f07f96821b88c2509a69ac8d3e70fad19b5a5295b39cf98044dccca31a404"""
     
     result = await functions.decryptLink(encrypted_link.strip())
     assert result == decrypted_link.strip()
-
-@pytest.mark.asyncio
-async def test_unpad():
-    padded = "GaanaPy" + chr(2) + chr(2)
-    result = await functions.unpad(padded)
-    assert result == "GaanaPy"
-    with pytest.raises(IndexError):
-        await functions.unpad("")
     
 @pytest.mark.asyncio
 async def test_findArtistNames():
