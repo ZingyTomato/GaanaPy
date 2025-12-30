@@ -1,36 +1,30 @@
 import asyncio
 from Crypto.Cipher import AES
 import base64
-import binascii
 
 class Functions:
     
-    ### From https://github.com/cyberboysumanjay/GaanaAPI/blob/0488e812a9ac7d740d785c6e09f1e83e527eebcc/gaana.py#L57
-    async def decryptLink(self, link: str) -> str:
-        IV = 'asd!@#!@#@!12312'.encode('utf-8')
-        KEY = 'g@1n!(f1#r.0$)&%'.encode('utf-8')
-        aes = AES.new(KEY, AES.MODE_CBC, IV)
-        try:
-            if not link:
-                return ""
-            if isinstance(link, bytes):
-                raw_link = link.decode('utf-8', errors='ignore')
-            else:
-                raw_link = str(link)
-            normalized = raw_link.strip().replace("\n", "").replace("\r", "").replace(" ", "")
-            padding = '=' * (-len(normalized) % 4)
-            try:
-                decoded = base64.b64decode(normalized + padding)
-            except (binascii.Error, ValueError):
-                decoded = base64.urlsafe_b64decode(normalized + padding)
-            decrypted = aes.decrypt(decoded).decode('utf-8')
-            stream_url = await self.unpad(decrypted)
-        except (binascii.Error, UnicodeDecodeError, ValueError, TypeError, IndexError):
-            return ""
-        return stream_url
-
-    async def unpad(self, s: str) -> str: 
-        return s[0:-ord(s[-1])]
+    async def decryptLink(self, encrypted_data: str) -> str:
+        ## NEW IV and KEY. These can possibly keep changing.
+        IV = b'xC4dmVJAq14BfntX'
+        KEY = b'gy1t#b@jl(b$wtme' 
+        offset = int(encrypted_data[0]) ## Calculate offset from the first character.
+        cipher = AES.new(KEY, AES.MODE_CBC, IV)
+        
+        ## Extract Ciphertext (skipping offset + 16-char IV string).
+        ciphertext_b64 = encrypted_data[offset + 16:]
+        ciphertext = base64.b64decode(ciphertext_b64 + "==")
+        
+        ## Decrypt using the IV and key from above.
+        decrypted = cipher.decrypt(ciphertext)
+        raw_text = decrypted.decode('utf-8', errors='ignore').strip()
+        
+        if "/hls/" in raw_text:
+            path_start = raw_text.find("hls/")
+            clean_path = raw_text[path_start:]
+            # Remove any non-printable padding characters at the end.
+            clean_path = "".join(filter(lambda x: x.isprintable(), clean_path))
+            return f"https://vodhlsgaana-ebw.akamaized.net/{clean_path}"
 
     async def findArtistNames(self, results: list) -> str:
         artists = []

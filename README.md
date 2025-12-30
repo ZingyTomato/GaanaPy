@@ -56,10 +56,10 @@ The API provides structured JSON responses for:
     },
     "stream_urls": {
       "urls": {
-        "very_high_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/320.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
-        "high_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/128.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
-        "medium_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/64.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
-        "low_quality": "https://vodhlsgaana.akamaized.net/hls/3/3487503/32408795/16.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb"
+        "very_high_quality": "https://vodhlsgaana-ebw.akamaized.net/hls/3/3487503/32408795/320.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "high_quality": "https://vodhlsgaana-ebw.akamaized.net/hls/3/3487503/32408795/128.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "medium_quality": "https://vodhlsgaana-ebw.akamaized.net/hls/3/3487503/32408795/64.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb",
+        "low_quality": "https://vodhlsgaana-ebw.akamaized.net/hls/3/3487503/32408795/16.mp4.master.m3u8?hdnts=st=1750835850~exp=1750850250~acl=/*~hmac=ebd312837a89763eb967627048071b22ee619be14219ff402143d023c50cf7bb"
       }
     }
   }
@@ -235,7 +235,6 @@ Navigate to: `http://127.0.0.1:8000` to get started.
 Deploy the API locally using the following Docker-Compose stack: 
 
 ```
----
 services:
   gaanapy:
     image: zingytomato/gaanapy:main
