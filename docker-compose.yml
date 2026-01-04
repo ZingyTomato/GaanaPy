@@ -1,9 +1,7 @@
----
-version: "2.1"
 services:
   gaanapy:
     image: zingytomato/gaanapy:main
     container_name: gaanapy
     ports:
-      - 8000:8000 # External port can be changed
+      - "8000:8000"
     restart: unless-stopped

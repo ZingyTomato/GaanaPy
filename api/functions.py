@@ -1,30 +1,32 @@
 import asyncio
 from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 import base64
 
 class Functions:
     
+    def __init__(self):
+        self.BLOCK_SIZE = 16
+    
     async def decryptLink(self, encrypted_data: str) -> str:
-        ## NEW IV and KEY. These can possibly keep changing.
-        IV = b'xC4dmVJAq14BfntX'
+        encrypted_data = encrypted_data.strip()
+        ## This master key can possibly keep changing.
         KEY = b'gy1t#b@jl(b$wtme' 
         offset = int(encrypted_data[0]) ## Calculate offset from the first character.
-        cipher = AES.new(KEY, AES.MODE_CBC, IV)
         
-        ## Extract Ciphertext (skipping offset + 16-char IV string).
-        ciphertext_b64 = encrypted_data[offset + 16:]
-        ciphertext = base64.b64decode(ciphertext_b64 + "==")
+        ## Extract the raw IV using the offset.
+        ivRaw = encrypted_data[offset:offset + self.BLOCK_SIZE]
+        iv = ivRaw.encode("utf-8")
         
-        ## Decrypt using the IV and key from above.
-        decrypted = cipher.decrypt(ciphertext)
-        raw_text = decrypted.decode('utf-8', errors='ignore').strip()
+        ## Calculate ciphertext.
+        cipher_text_b64 = encrypted_data[offset + self.BLOCK_SIZE:]
+        cipher_bytes = base64.b64decode(cipher_text_b64)
         
-        if "/hls/" in raw_text:
-            path_start = raw_text.find("hls/")
-            clean_path = raw_text[path_start:]
-            # Remove any non-printable padding characters at the end.
-            clean_path = "".join(filter(lambda x: x.isprintable(), clean_path))
-            return f"https://vodhlsgaana-ebw.akamaized.net/{clean_path}"
+        ## Decrypt ciphertext to get final URL.
+        cipher = AES.new(KEY, AES.MODE_CBC, iv)
+        decrypted = unpad(cipher.decrypt(cipher_bytes), self.BLOCK_SIZE)
+        
+        return decrypted.decode("utf-8") 
 
     async def findArtistNames(self, results: list) -> str:
         artists = []
