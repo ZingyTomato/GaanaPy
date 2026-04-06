@@ -1,4 +1,4 @@
 pycryptodome==3.23.0
 fastapi==0.135.3
 aiohttp==3.13.5
-uvicorn==0.42.0
+uvicorn==0.43.0
