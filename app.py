@@ -4,7 +4,17 @@ from api.gaanapy import GaanaPy
 from typing import Optional
 
 app = FastAPI()
-gaanapy = GaanaPy()
+gaanapy = None
+
+@app.on_event("startup")
+async def startup_event():
+    global gaanapy
+    gaanapy = GaanaPy()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    if gaanapy and hasattr(gaanapy, 'aiohttp'):
+        await gaanapy.aiohttp.close()
 
 @app.get("/")
 async def home():
