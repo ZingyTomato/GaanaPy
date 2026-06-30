@@ -1,4 +1,4 @@
 pycryptodome==3.23.0
-fastapi==0.138.1
+fastapi==0.138.2
 aiohttp==3.14.1
 uvicorn==0.49.0
