@@ -58,11 +58,13 @@ async def artists_search(query: str = Query(description=
     return result
 
 @app.get("/artists/info/", summary="Retrieve detailed information on an artist.")
-async def artists_info(seokey: str = Query(description=
-                                           "The `seokey` of the artist. Example, `ksi` in `https://gaana.com/artist/ksi`")) :
-    artist_list = []
-    artist_list.append(seokey)
-    artist_info = await gaanapy.get_artist_info(artist_list, True)
+async def artists_info(
+    seokey: str = Query(description="The `seokey` of the artist. Example: `ksi` in `https://gaana.com/artist/ksi`"),
+    limit: Optional[int] = 10,
+    page: Optional[int] = 1
+):
+    artist_list = [seokey]
+    artist_info = await gaanapy.get_artist_info(artist_list, True, limit, page)
     return artist_info
 
 @app.get("/artists/similar/", summary="Retrieve similar artists based on a specific artist.")

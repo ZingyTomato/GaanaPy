@@ -8,17 +8,17 @@ class Artists:
         response = await aiohttp.post(endpoints.search_artists_url + search_query)
         result = await response.json()
         artist_ids = []
-        for i in range(0,int(limit)):
+        for i in range(0, int(limit)):
             try:
                 artist_ids.append(result['gr'][0]['gd'][int(i)]['seo'])
             except (IndexError, TypeError, KeyError):
                 pass
         if len(artist_ids) == 0:
-          return await errors.no_results()
+            return await errors.no_results()
         artist_info = await self.get_artist_info(artist_ids, False)
         return artist_info
 
-    async def get_artist_info(self, artist_id: list, info: bool) -> list:
+    async def get_artist_info(self, artist_id: list, info: bool, limit: int = 10, page: int = 1) -> list:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints
         artist_info = []
@@ -27,10 +27,10 @@ class Artists:
         for i in artist_id:
             response = await aiohttp.post(endpoints.artist_details_url + i)
             result = await response.json()
-            artist_info.extend(await asyncio.gather(*[self.format_json_artists(result) for i in range(0,1)]))
+            artist_info.extend(await asyncio.gather(*[self.format_json_artists(result, limit, page) for _ in range(1)]))
         return artist_info
 
-    async def get_top_tracks(self, artist_id: str) -> dict:
+    async def get_top_tracks(self, artist_id: str, limit: int = 10, page: int = 1) -> dict:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints
         response = await aiohttp.post(endpoints.artist_top_tracks + artist_id)
@@ -38,9 +38,12 @@ class Artists:
         track_seokeys = []
         for track in result['entities']:
             track_seokeys.append(track['seokey'])
-        track_data = await self.get_track_info(track_seokeys)
-        return track_data
-    
+        total = len(track_seokeys)
+        offset = (page - 1) * limit
+        paginated_seokeys = track_seokeys[offset:offset+limit]
+        tracks = await self.get_track_info(paginated_seokeys)
+        return {"tracks": tracks, "total": total}
+
     async def get_similar_artists(self, artist_id: str, limit: int) -> dict:
         aiohttp = self.aiohttp
         endpoints = self.api_endpoints
@@ -50,7 +53,7 @@ class Artists:
         similar_artists.extend(await asyncio.gather(*[self.format_json_similar_artists(result['entities'][i]) for i in range(int(limit))]))
         return similar_artists
 
-    async def format_json_artists(self, results: dict) -> dict:
+    async def format_json_artists(self, results: dict, limit: int = 10, page: int = 1) -> dict:
         functions = self.functions
         errors = self.errors
         data = {}
@@ -69,10 +72,12 @@ class Artists:
         data['images']['urls']['medium_artwork'] = (results['artist'][0]['atw']).replace("size_m", "size_m")
         data['images']['urls']['small_artwork'] = (results['artist'][0]['atw']).replace("size_m", "size_s")
         if self.info == True:
-            data['top_tracks'] = await self.get_top_tracks(data['artist_id'])
+            top_tracks_data = await self.get_top_tracks(data['artist_id'], limit, page)
+            data['top_tracks'] = top_tracks_data['tracks']
+            data['total_tracks'] = top_tracks_data['total']
         self.info = False
         return data
-    
+
     async def format_json_similar_artists(self, results: dict) -> dict:
         functions = self.functions
         errors = self.errors
