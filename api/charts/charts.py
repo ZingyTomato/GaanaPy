@@ -2,28 +2,38 @@ import asyncio
 
 class Charts:
     async def get_charts(self, limit: int) -> list:
-        aiohttp = self.aiohttp
         endpoints = self.api_endpoints
         errors = self.errors
-        response = await aiohttp.post(endpoints.charts_url + str(limit))
-        result = await response.json()
+        result = await self._safe_request("POST", endpoints.charts_url + str(limit))
+        if isinstance(result, dict) and "error" in result:
+            return result
+        entities = []
+        entities_list = result.get('entities', [])
+        for i in range(min(limit, len(entities_list))):
+            entities.append(entities_list[i])
+        if len(entities) == 0:
+            return await errors.no_results()
         chart_info = []
-        chart_info.extend(await asyncio.gather(*[self.format_json_charts(result['entities'][int(i)]) for i in range(0, int(limit))]))
+        chart_info.extend(await asyncio.gather(*[self.format_json_charts(entity) for entity in entities]))
         return chart_info
 
     async def format_json_charts(self, results: dict) -> dict:
         functions = self.functions
         data = {}
-        data['seokey'] = results['seokey']
-        data['playlist_id'] = results['entity_id']
-        data['title'] = results['name']
-        data['language'] = results['language']
-        data['favorite_count'] = results['favorite_count']
-        data['is_explicit'] = await functions.isExplicit(results['entity_info'][6]['value'])
-        data['play_count'] = results['entity_info'][-1]['value']
-        data['playlist_url'] = f"https://gaana.com/playlist/{data['seokey']}"
+        data['seokey'] = results.get('seokey', '')
+        data['playlist_id'] = results.get('entity_id', '')
+        data['title'] = results.get('name', '')
+        data['language'] = results.get('language', '')
+        data['favorite_count'] = results.get('favorite_count', '')
+        entity_info = results.get('entity_info') or []
+        data['is_explicit'] = await functions.isExplicit(
+            entity_info[6].get('value', 0) if len(entity_info) > 6 else 0
+        )
+        data['play_count'] = entity_info[-1].get('value', '') if entity_info else ''
+        data['playlist_url'] = f"https://gaana.com/playlist/{data['seokey']}" if data['seokey'] else ''
+        atw = results.get('atw', '')
         data['images'] = {'urls': {}}
-        data['images']['urls']['large_artwork'] = (results['atw']).replace("size_m.jpg", "size_l.jpg")
-        data['images']['urls']['medium_artwork'] = (results['atw'])
-        data['images']['urls']['small_artwork'] = (results['atw']).replace("size_m.jpg", "size_s.jpg")
+        data['images']['urls']['large_artwork'] = atw.replace("size_m.jpg", "size_l.jpg") if atw else ''
+        data['images']['urls']['medium_artwork'] = atw
+        data['images']['urls']['small_artwork'] = atw.replace("size_m.jpg", "size_s.jpg") if atw else ''
         return data

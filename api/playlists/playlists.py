@@ -1,16 +1,20 @@
 class Playlists:
     async def get_playlist_info(self, playlist_id: str) -> dict:
-        aiohttp = self.aiohttp
         endpoints = self.api_endpoints
         errors = self.errors
-        response = await aiohttp.post(endpoints.playlist_details_url + playlist_id)
-        result = await response.json()
-        track_count = result['count']
+        result = await self._safe_request("POST", endpoints.playlist_details_url + playlist_id)
+        if isinstance(result, dict) and "error" in result:
+            return result
+        track_count = result.get('count')
+        if not track_count:
+            return await errors.no_results()
         track_ids = []
-        for i in range(0,int(track_count)):
-            try:
-                track_ids.append(result['tracks'][int(i)]['seokey'])
-            except (IndexError, TypeError, KeyError):
-                pass
+        tracks = result.get('tracks', [])
+        for i in range(min(int(track_count), len(tracks))):
+            seo = tracks[i].get('seokey') if isinstance(tracks[i], dict) else None
+            if seo:
+                track_ids.append(seo)
+        if len(track_ids) == 0:
+            return await errors.no_results()
         track_data = await self.get_track_info(track_ids)
         return track_data

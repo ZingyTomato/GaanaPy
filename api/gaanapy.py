@@ -1,3 +1,4 @@
+import asyncio
 import aiohttp
 from api.songs.songs import Songs
 from api.albums.albums import Albums
@@ -12,10 +13,24 @@ from api.errors import Errors
 
 class GaanaPy(Songs, Albums, Artists, Trending, NewReleases, Charts, Playlists):
     def __init__(self):
-        self.aiohttp = aiohttp.ClientSession()
+        self.aiohttp = aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=30)
+        )
         self.api_endpoints = endpoints
         self.functions = Functions()
         self.errors = Errors()
-        self.info = False
-    def __await__(self):
-        return self.async_init().__await__()
+
+    async def _safe_request(self, method: str, url: str, **kwargs) -> dict:
+        try:
+            if method == "GET":
+                response = await self.aiohttp.get(url, **kwargs)
+            else:
+                response = await self.aiohttp.post(url, **kwargs)
+            if response.status != 200:
+                return await self.errors.no_results()
+            result = await response.json()
+            if not isinstance(result, dict):
+                return await self.errors.no_results()
+            return result
+        except (aiohttp.ClientError, asyncio.TimeoutError, ValueError, TypeError):
+            return await self.errors.no_results()
